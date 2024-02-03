@@ -6,9 +6,7 @@ export class LoadingScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', 'assets/background.png');
-        this.load.image('character', 'assets/character.png');
-        this.load.audio('bgMusic', 'assets/background-music.mp3');
+        
     }
 
     create() {

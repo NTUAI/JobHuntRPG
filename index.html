@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>EosRPG</title>
-		<style>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EosRPG</title>
+    <style>
       html,
-      body,
-      .container {
+      body {
         margin: 0px;
         height: 100vh;
         width: 100vw;
@@ -15,13 +14,28 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: flex-start; /* Ensure content is aligned to the top */
+      }
+      .container {
+        width: 100%; /* Adjust container width as needed */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1 {
+        color: #808080; /* Gray color */
+        margin: 0; /* Remove default margin to align it at the top */
+        padding: 10px 0; /* Add some padding at the top if needed */
+        width: 100%; /* Ensure it spans the width of the container */
+        text-align: center; /* Center the text */
       }
     </style>
-	</head>
-	<body>
-		<div class="container" id="game-container">
+</head>
+<body>
+    <div class="container" id="game-container">
       <h1>EosRPG</h1>
+      <!-- Your game's canvas or additional content goes here -->
     </div>
-		<script type="module" src="/src/main.ts"></script>
-	</body>
+    <script type="module" src="/src/main.ts"></script>
+</body>
 </html>

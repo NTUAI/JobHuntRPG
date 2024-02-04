@@ -2,26 +2,25 @@ import Phaser from 'phaser';
 import {CST} from "../CST";
 
 export class GameScene extends Phaser.Scene {
-  private bg!: Phaser.GameObjects.TileSprite;
-  private player!: Phaser.Physics.Arcade.Sprite;
   // environment images
-  // private fg!: Phaser.GameObjects.TileSprite;
+  private bg!: Phaser.GameObjects.TileSprite;
   
   // audio
   private music!: Phaser.Sound.BaseSound;
   private ship!: Phaser.Sound.BaseSound;
 
   // keyboard
-  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-  private spacebar!: Phaser.Input.Keyboard.Key;
-  private shift!: Phaser.Input.Keyboard.Key;
-  private w!: Phaser.Input.Keyboard.Key;
-  private a!: Phaser.Input.Keyboard.Key;
-  private s!: Phaser.Input.Keyboard.Key;
-  private d!: Phaser.Input.Keyboard.Key;
+  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys; // move up, left, down, right
+  private w!: Phaser.Input.Keyboard.Key; // move up
+  private a!: Phaser.Input.Keyboard.Key; // move left
+  private s!: Phaser.Input.Keyboard.Key; // move down
+  private d!: Phaser.Input.Keyboard.Key; // move right
+  private spacebar!: Phaser.Input.Keyboard.Key; // chat / interact
+  private shift!: Phaser.Input.Keyboard.Key; // sprint
+  private esc!: Phaser.Input.Keyboard.Key; // return to main menu
   
   // character
-  // private circle!: Phaser.GameObjects.Sprite;
+  private player!: Phaser.Physics.Arcade.Sprite;
 
   constructor() {
     super({ key: CST.SCENES.PLAY });
@@ -33,19 +32,14 @@ export class GameScene extends Phaser.Scene {
 
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.shift = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+    this.esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     this.w = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     this.a = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.s = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     this.d = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
     // character (temp, need to preload images once character sprite sheet is ready)
-    /*
-    const graphics = this.add.graphics();
-    graphics.fillStyle(0xffffff, 1);
-    graphics.fillCircle(200, 200, 10); // x, y, radius
-    graphics.generateTexture('dynamicCircle', 100, 100)
-    this.circle = this.add.sprite(100, 100, 'dynamicCircle');
-    */
+    
 
     // scene boundaries
     this.physics.world.setBounds(50, 80, this.game.renderer.width-80, this.game.renderer.width-115);
@@ -130,6 +124,12 @@ export class GameScene extends Phaser.Scene {
   }
 
   handleKeyboard() {
+
+    if(this.esc.isDown) {
+        this.sound.stopAll();
+        this.scene.start(CST.SCENES.MENU);
+    }
+
     let speed = this.shift.isDown ? 250 : 150;
     // run
     if(this.shift.isDown) {

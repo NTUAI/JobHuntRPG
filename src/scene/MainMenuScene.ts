@@ -14,10 +14,10 @@ export class MainMenuScene extends Phaser.Scene {
         //create images (z order)
         //this.add.image(this.game.renderer.width / 2, this.game.renderer.height * 0.20, CST.IMAGE.LOGO).setDepth(1);
         this.add.image(0, 0, CST.IMAGE.TITLE).setOrigin(0).setDepth(0).setScale(0.5);
-        let playButton = this.add.image((this.game.renderer.width / 2) + 150, 80, CST.IMAGE.PLAY).setDepth(1).setScale(0.25);
-        let optionsButton = this.add.image((this.game.renderer.width / 2) + 150, this.game.renderer.height / 2 - 100, CST.IMAGE.OPTIONS).setDepth(1).setScale(0.25);
-        let quitButton = this.add.image((this.game.renderer.width / 2) + 150, this.game.renderer.height / 2 + 100, CST.IMAGE.QUIT).setDepth(1).setScale(0.25);
-        let hoverImg = this.add.image(100, 100, CST.IMAGE.HOVER).setScale(0.4).setVisible(false);
+        let playButton = this.add.image((this.game.renderer.width / 2) + 150, 100, CST.IMAGE.PLAY).setDepth(1).setScale(0.25);
+        let optionsButton = this.add.image((this.game.renderer.width / 2) + 150, 200, CST.IMAGE.OPTIONS).setDepth(1).setScale(0.25);
+        let quitButton = this.add.image((this.game.renderer.width / 2) + 150, 300, CST.IMAGE.QUIT).setDepth(1).setScale(0.25);
+        let hoverImg = this.add.image(100, 100, CST.IMAGE.HOVER).setScale(0.25).setVisible(false);
 
         //create sprites (if using pixel art, remove sharpen)
         /*let hoverSprite: Phaser.GameObjects.Sprite = this.add.sprite(100, 100, CST.SPRITE.CAT);

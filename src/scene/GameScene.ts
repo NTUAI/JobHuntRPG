@@ -1,12 +1,5 @@
 import Phaser from 'phaser';
-
-
-const AssetKeys = {
-  BACKGROUND: 'BACKGROUND',
-  MUSIC: 'MUSIC',
-  SHIP: 'SHIP',
-  PLAYER: 'PLAYER'
-}
+import {CST} from "../CST";
 
 export class GameScene extends Phaser.Scene {
   private bg!: Phaser.GameObjects.TileSprite;
@@ -31,27 +24,11 @@ export class GameScene extends Phaser.Scene {
   // private circle!: Phaser.GameObjects.Sprite;
 
   constructor() {
-    super({ key: 'Game' });
-    //super('LoadingScene')
-  }
-
-  preload(): void {
-    // images
-    this.load.image(AssetKeys.BACKGROUND, 'assets/room7_50.jpg')
-    //this.load.image(AssetKeys.PLAYER, 'assets/player.png')
-
-    // audio
-    this.load.audio(AssetKeys.SHIP, 'assets/audio/ship.mp3')
-    this.load.audio(AssetKeys.MUSIC, 'assets/audio/celtic.mp3')
-
-    // keyboard
-    //this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-    //this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.);
+    super({ key: CST.SCENES.PLAY });
   }
 
   create(): void {
-    const { width, height } = this.scale;
-    this.bg = this.add.tileSprite(256, 256, width, height, AssetKeys.BACKGROUND)
+    this.bg = this.add.tileSprite(256, 256, this.game.renderer.width, this.game.renderer.height, CST.IMAGE.HR_ROOM)
     this.player = this.physics.add.sprite(100, 400, "player")
 
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -60,9 +37,6 @@ export class GameScene extends Phaser.Scene {
     this.a = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.s = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     this.d = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-
-
-    //this.createSpeechBubble(this.player.x, this.player.y, 100, 50, 'This is a test speech bubble for EosRPG.');
 
     // character (temp, need to preload images once character sprite sheet is ready)
     /*
@@ -74,15 +48,15 @@ export class GameScene extends Phaser.Scene {
     */
 
     // scene boundaries
-    this.physics.world.setBounds(50, 80, width-80, height-115);
+    this.physics.world.setBounds(50, 80, this.game.renderer.width-80, this.game.renderer.width-115);
     this.player.setCollideWorldBounds(true);
     
     // ship sound effects
-    this.ship = this.sound.add(AssetKeys.SHIP, { loop: true });
+    this.ship = this.sound.add(CST.AUDIO.GAME_AUDIO, { loop: true });
     this.ship.play();
 
     // background music
-    this.music = this.sound.add(AssetKeys.MUSIC, { loop: true, volume: 0.3 });
+    this.music = this.sound.add(CST.AUDIO.GAME_MUSIC, { loop: true, volume: 0.3 });
     this.music.play();
     /*// Start music on user interaction
     this.input.once('pointerdown', () => {

@@ -70,11 +70,10 @@ export class LoadingScene extends Phaser.Scene {
             console.log(""+ percent);
         })
 
-        this.add.image(0, 0, '../assets/images/loading.png');
+        this.load.setPath("../assets/images");
         this.add.text(20, this.renderer.height / 2, 'Loading...', { font: '40px Arial', color: '#a9a9a9' });
         
         //simulate large load
-        this.load.setPath("../assets/images");
         for(let i = 0; i < 100; i++) {
             let uniqueKey = `placeholder_${i}`;
             this.load.image(uniqueKey, 'room7_50.jpg');
@@ -90,6 +89,6 @@ export class LoadingScene extends Phaser.Scene {
     }
 
     create(): void {
-        
+        let loading = this.add.image(100, 100, CST.IMAGE.LOADING).setOrigin(100).setDepth(1).setScale(1);
     }
 }

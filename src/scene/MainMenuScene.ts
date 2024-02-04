@@ -30,16 +30,6 @@ export class MainMenuScene extends Phaser.Scene {
 
         //create animation
 
-        /*
-        this.anims.create({
-            key: "walk",
-            frameRate: 4,
-            repeat: -1, //repeat forever,
-            frames: this.anims.generateFrameNumbers(CST.SPRITE.CAT, {
-                frames: [0, 1, 2, 3]
-            })
-        });*/
-
         //make image buttons interactive
         /* 
             PointerEvents:
@@ -57,7 +47,7 @@ export class MainMenuScene extends Phaser.Scene {
             hoverImg.setVisible(true);
             hoverImg.setX(playButton.x);
             hoverImg.setY(playButton.y);
-            this.sound.add(CST.AUDIO.SELECT, {volume: 3}).play();
+            this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
         })
 
         playButton.on("pointerout", () => {
@@ -65,7 +55,8 @@ export class MainMenuScene extends Phaser.Scene {
         })
 
         playButton.on("pointerup", () => {
-            this.sound.add(CST.AUDIO.SELECT, {volume: 3}).play();
+            // this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
+            this.sound.stopAll();
             this.scene.start(CST.SCENES.PLAY);
         })
 
@@ -76,7 +67,7 @@ export class MainMenuScene extends Phaser.Scene {
             hoverImg.setVisible(true);
             hoverImg.setX(optionsButton.x);
             hoverImg.setY(optionsButton.y);
-            this.sound.add(CST.AUDIO.SELECT, {volume: 3}).play();
+            this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
         })
 
         optionsButton.on("pointerout", () => {
@@ -94,7 +85,7 @@ export class MainMenuScene extends Phaser.Scene {
             hoverImg.setVisible(true);
             hoverImg.setX(quitButton.x);
             hoverImg.setY(quitButton.y);
-            this.sound.add(CST.AUDIO.SELECT, {volume: 3}).play();
+            this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
         })
 
         optionsButton.on("pointerout", () => {

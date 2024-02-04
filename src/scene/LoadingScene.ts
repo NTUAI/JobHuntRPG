@@ -8,14 +8,18 @@ export class LoadingScene extends Phaser.Scene {
 
     loadImages() {
         this.load.setPath("../assets/images");
+        console.log(`Starting to load from directory: ${this.load.path}`);
         for (let prop in CST.IMAGE) {
+            console.log(`Starting to load: ${this.load.path}${CST.IMAGE[prop]}`);
             this.load.image(CST.IMAGE[prop], CST.IMAGE[prop]);
         }
     }
 
     loadAudio() {
         this.load.setPath("../assets/audio");
+        console.log(`Starting to load from directory: ${this.load.path}`);
         for (let prop in CST.AUDIO) {
+            console.log(`Starting to load: ${this.load.path}${CST.AUDIO[prop]}`);
             this.load.audio(CST.AUDIO[prop], CST.AUDIO[prop]);
         }
     }
@@ -60,6 +64,7 @@ export class LoadingScene extends Phaser.Scene {
             complete - when done loading everything
             progress - loader number progress in decimal
         */
+
         this.load.on("progress", (percent: number) => {
             loadingBar.fillRect(0, this.game.renderer.height / 2, this.game.renderer.width * percent, 50);
             console.log(""+ percent);
@@ -69,8 +74,10 @@ export class LoadingScene extends Phaser.Scene {
         this.add.text(20, this.renderer.height / 2, 'Loading...', { font: '40px Arial', color: '#a9a9a9' });
         
         //simulate large load
-        for(let i = 0; i < 100; i++){
-            this.load.image('./assets/images/player.png')
+        this.load.setPath("../assets/images");
+        for(let i = 0; i < 100; i++) {
+            let uniqueKey = `placeholder_${i}`;
+            this.load.image(uniqueKey, 'room7_50.jpg');
         }
 
         this.load.on("complete", () => {

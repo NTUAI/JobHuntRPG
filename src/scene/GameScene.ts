@@ -38,7 +38,7 @@ export class GameScene extends Phaser.Scene {
   preload(): void {
     // images
     this.load.image(AssetKeys.BACKGROUND, 'assets/room7_50.jpg')
-    this.load.image(AssetKeys.PLAYER, 'assets/player.png')
+    //this.load.image(AssetKeys.PLAYER, 'assets/player.png')
 
     // audio
     this.load.audio(AssetKeys.SHIP, 'assets/audio/ship.mp3')
@@ -183,10 +183,13 @@ export class GameScene extends Phaser.Scene {
       this.player.setVelocity(speed, 0);
     }
 
-    // speech and interaction
+    // speech and interaction (chat bubble currently)
     if(Phaser.Input.Keyboard.JustDown(this.spacebar)) {
       this.createSpeechBubble(this.player.x - 50, this.player.y - 80, 100, 50, 'This is a test speech bubble for EosRPG.')
     };
+
+    // ESC input
+    
 
     // if the user presses ESC, overlay the menu
     // menu: Resume, Sound, Exit

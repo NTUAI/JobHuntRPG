@@ -5,6 +5,7 @@ export const CST = {
         PLAY: "PLAY"
     },
     IMAGE: {
+        HOVER: "hover.png",
         LOADING: "loading.png",
         TITLE: "mainmenu.jpg",
         PLAY: "start.png",

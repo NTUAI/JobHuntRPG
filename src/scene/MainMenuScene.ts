@@ -8,6 +8,8 @@ export class MainMenuScene extends Phaser.Scene {
     init() {}
 
     create() {
+        this.sound.add(CST.AUDIO.TITLE_AUDIO, { loop: true }).play();
+        this.sound.add(CST.AUDIO.TITLE_MUSIC, { volume: 0.3, loop: true }).play();
 
         //create images (z order)
         //this.add.image(this.game.renderer.width / 2, this.game.renderer.height * 0.20, CST.IMAGE.LOGO).setDepth(1);
@@ -15,6 +17,7 @@ export class MainMenuScene extends Phaser.Scene {
         let playButton = this.add.image((this.game.renderer.width / 2) + 150, 80, CST.IMAGE.PLAY).setDepth(1).setScale(0.25);
         let optionsButton = this.add.image((this.game.renderer.width / 2) + 150, this.game.renderer.height / 2 - 100, CST.IMAGE.OPTIONS).setDepth(1).setScale(0.25);
         let quitButton = this.add.image((this.game.renderer.width / 2) + 150, this.game.renderer.height / 2 + 100, CST.IMAGE.QUIT).setDepth(1).setScale(0.25);
+        let hoverImg = this.add.image(100, 100, CST.IMAGE.HOVER).setScale(0.4).setVisible(true);
 
         //create sprites (if using pixel art, remove sharpen)
         /*let hoverSprite: Phaser.GameObjects.Sprite = this.add.sprite(100, 100, CST.SPRITE.CAT);
@@ -45,6 +48,7 @@ export class MainMenuScene extends Phaser.Scene {
                 pointerup - click and release
                 pointerdown - just click
         */
+
         playButton.setInteractive();
 
         /*playButton.on("pointerover", () => {

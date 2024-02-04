@@ -6,7 +6,7 @@ export const CST = {
     },
     IMAGE: {
         LOADING: "loading.png",
-        TITLE: "mainmenu.png",
+        TITLE: "mainmenu.jpg",
         PLAY: "start.png",
         OPTIONS: "options.png",
         QUIT: "quit.png"

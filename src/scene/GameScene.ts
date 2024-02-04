@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 
+
 const AssetKeys = {
   BACKGROUND: 'BACKGROUND',
   MUSIC: 'MUSIC',
@@ -7,7 +8,7 @@ const AssetKeys = {
   PLAYER: 'PLAYER'
 }
 
-class GameScene extends Phaser.Scene {
+export class GameScene extends Phaser.Scene {
   private bg!: Phaser.GameObjects.TileSprite;
   private player!: Phaser.Physics.Arcade.Sprite;
   // environment images
@@ -193,7 +194,7 @@ class GameScene extends Phaser.Scene {
   }
 }
 
-class MainMenu extends Phaser.Scene {
+/*class MainMenu extends Phaser.Scene {
   constructor() {
       super({ key: 'MainMenu' });
   }
@@ -215,4 +216,4 @@ class MainMenu extends Phaser.Scene {
   update() {
       // The main menu typically doesn't need to update anything continuously
   }
-}
+}*/

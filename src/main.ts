@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 
 import {LoadingScene} from "./scene/LoadingScene"
 import {MainMenuScene} from "./scene/MainMenuScene"
-//import {GameScene} from "./scene/GameScene"
+import {GameScene} from "./scene/GameScene"
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
   type: Phaser.CANVAS,
@@ -13,7 +13,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
     height: 512,
   },
   backgroundColor: '#5c5b5b',
-  scene: [LoadingScene, MainMenuScene/*, GameScene*/],
+  scene: [LoadingScene, MainMenuScene, GameScene],
   physics: {
     default: "arcade",
     arcade: {

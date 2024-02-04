@@ -7,14 +7,14 @@ export class LoadingScene extends Phaser.Scene {
     init() {}
 
     loadImages() {
-        this.load.setPath("./assets/image");
+        this.load.setPath("../assets/images");
         for (let prop in CST.IMAGE) {
             this.load.image(CST.IMAGE[prop], CST.IMAGE[prop]);
         }
     }
 
     loadAudio() {
-        this.load.setPath("./assets/audio");
+        this.load.setPath("../assets/audio");
         for (let prop in CST.AUDIO) {
             this.load.audio(CST.AUDIO[prop], CST.AUDIO[prop]);
         }
@@ -62,9 +62,12 @@ export class LoadingScene extends Phaser.Scene {
         */
         this.load.on("progress", (percent: number) => {
             loadingBar.fillRect(0, this.game.renderer.height / 2, this.game.renderer.width * percent, 50);
-            console.log(percent);
+            console.log(""+ percent);
         })
 
+        this.add.image(0, 0, '../assets/images/loading.png');
+        this.add.text(20, this.renderer.height / 2, 'Loading...', { font: '40px Arial', color: '#a9a9a9' });
+        
         //simulate large load
         for(let i = 0; i < 100; i++){
             this.load.image('./assets/images/player.png')
@@ -77,5 +80,9 @@ export class LoadingScene extends Phaser.Scene {
         this.load.on("load", (file: Phaser.Loader.File) => {
             console.log(file.src)
         })
+    }
+
+    create(): void {
+        
     }
 }

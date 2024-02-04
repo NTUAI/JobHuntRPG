@@ -17,7 +17,7 @@ export class MainMenuScene extends Phaser.Scene {
         let playButton = this.add.image((this.game.renderer.width / 2) + 150, 80, CST.IMAGE.PLAY).setDepth(1).setScale(0.25);
         let optionsButton = this.add.image((this.game.renderer.width / 2) + 150, this.game.renderer.height / 2 - 100, CST.IMAGE.OPTIONS).setDepth(1).setScale(0.25);
         let quitButton = this.add.image((this.game.renderer.width / 2) + 150, this.game.renderer.height / 2 + 100, CST.IMAGE.QUIT).setDepth(1).setScale(0.25);
-        let hoverImg = this.add.image(100, 100, CST.IMAGE.HOVER).setScale(0.4).setVisible(true);
+        let hoverImg = this.add.image(100, 100, CST.IMAGE.HOVER).setScale(0.4).setVisible(false);
 
         //create sprites (if using pixel art, remove sharpen)
         /*let hoverSprite: Phaser.GameObjects.Sprite = this.add.sprite(100, 100, CST.SPRITE.CAT);
@@ -49,44 +49,57 @@ export class MainMenuScene extends Phaser.Scene {
                 pointerdown - just click
         */
 
+
+        // play button
         playButton.setInteractive();
 
-        /*playButton.on("pointerover", () => {
-            hoverSprite.setVisible(true);
-            hoverSprite.play("walk");
-            hoverSprite.x = playButton.x - playButton.width;
-            hoverSprite.y = playButton.y;
-
+        playButton.on("pointerover", () => {
+            hoverImg.setVisible(true);
+            hoverImg.setX(playButton.x);
+            hoverImg.setY(playButton.y);
+            this.sound.add(CST.AUDIO.SELECT, {volume: 3}).play();
         })
 
         playButton.on("pointerout", () => {
-            hoverSprite.setVisible(false);
-        })*/
+            hoverImg.setVisible(false);
+        })
 
         playButton.on("pointerup", () => {
+            this.sound.add(CST.AUDIO.SELECT, {volume: 3}).play();
             this.scene.start(CST.SCENES.PLAY);
         })
 
+        // options button
         optionsButton.setInteractive();
 
-        /*optionsButton.on("pointerover", () => {
-            hoverSprite.setVisible(true);
-            hoverSprite.play("walk");
-            hoverSprite.x = optionsButton.x - optionsButton.width;
-            hoverSprite.y = optionsButton.y;
-
+        optionsButton.on("pointerover", () => {
+            hoverImg.setVisible(true);
+            hoverImg.setX(optionsButton.x);
+            hoverImg.setY(optionsButton.y);
+            this.sound.add(CST.AUDIO.SELECT, {volume: 3}).play();
         })
 
         optionsButton.on("pointerout", () => {
-            hoverSprite.setVisible(false);
-        })*/
+            hoverImg.setVisible(false);
+        })
 
         optionsButton.on("pointerup", () => {
             //this.scene.launch();
         })
 
 
+        // quit button
         quitButton.setInteractive();
+        quitButton.on("pointerover", () => {
+            hoverImg.setVisible(true);
+            hoverImg.setX(quitButton.x);
+            hoverImg.setY(quitButton.y);
+            this.sound.add(CST.AUDIO.SELECT, {volume: 3}).play();
+        })
+
+        optionsButton.on("pointerout", () => {
+            hoverImg.setVisible(false);
+        })
         quitButton.on("pointerup", () => {
             window.location.href = "https://eosphor.us";
         })

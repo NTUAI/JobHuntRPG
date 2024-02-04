@@ -16,7 +16,8 @@ export const CST = {
         TITLE_MUSIC: "title.mp3",
         TITLE_AUDIO: "seagull_sea.mp3",
         GAME_MUSIC: "celtic.mp3",
-        GAME_AUDIO: "ship.mp3"
+        GAME_AUDIO: "ship.mp3",
+        SELECT: "select.mp3"
     },
     SPRITE: {
         CAT: "cat.png"

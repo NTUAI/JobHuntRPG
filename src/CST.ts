@@ -8,17 +8,18 @@ export const CST = {
     IMAGE: {
         LOADING: "loading.png",
         TITLE: "mainmenu.jpg",
-        PLAY: "start.png",
-        OPTIONS: "options.png",
-        QUIT: "quit.png",
+        PLAY: "play_button.png",
+        OPTIONS: "options_button.png",
+        QUIT: "quit_button.png",
         HOVER: "hover.png",
         
         PLAYER: "player.png",
         CEO_ROOM: "ceo.png",
         HR_ROOM: "HR_room.jpg",
 
-        FET_LOGO: "FET.png",
-        NTUAI_LOGO: "NTUAI.png"
+        FET_LOGO: "FET_logo.png",
+        NTUAI_LOGO: "NTUAI_logo.png",
+        EOSRPG_LOGO: "EosRPG_logo.png"
     },
     AUDIO: {
         TITLE_MUSIC: "title.mp3",

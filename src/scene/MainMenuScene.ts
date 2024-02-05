@@ -24,15 +24,20 @@ export class MainMenuScene extends Phaser.Scene {
     }
 
     create() {
+        // alert("test");
+        FadeUtils.fadeIn(this, 2000, (callback) => {
+            console.log("MainMenuScene activated")
+        });
         this.sound.add(CST.AUDIO.TITLE_AUDIO, { loop: true }).play();
         this.sound.add(CST.AUDIO.TITLE_MUSIC, { volume: 0.3, loop: true }).play();
 
         //create images (z order)
         //this.add.image(this.game.renderer.width / 2, this.game.renderer.height * 0.20, CST.IMAGE.LOGO).setDepth(1);
         this.add.image(0, 0, CST.IMAGE.TITLE).setOrigin(0).setDepth(0).setScale(0.5);
-        let playButton = this.add.image(70, 30, CST.IMAGE.PLAY).setDepth(1).setScale(0.2);
-        let optionsButton = this.add.image(260, 30, CST.IMAGE.OPTIONS).setDepth(1).setScale(0.2);
-        let quitButton = this.add.image(450, 30, CST.IMAGE.QUIT).setDepth(1).setScale(0.2);
+        let playButton = this.add.image(470, 50, CST.IMAGE.PLAY).setDepth(1).setScale(0.4);
+        let optionsButton = this.add.image(470, 150, CST.IMAGE.OPTIONS).setDepth(1).setScale(0.4);
+        let quitButton = this.add.image(470, 250, CST.IMAGE.QUIT).setDepth(1).setScale(0.4);
+        let EosRPG = this.add.image(400, 400, CST.IMAGE.EOSRPG_LOGO).setDepth(1).setScale(0.4);
         let hoverImg = this.add.image(100, 100, CST.IMAGE.HOVER).setScale(0.15).setVisible(false);
 
         //create sprites (if using pixel art, remove sharpen)
@@ -61,8 +66,8 @@ export class MainMenuScene extends Phaser.Scene {
 
         playButton.on("pointerover", () => {
             hoverImg.setVisible(true);
-            hoverImg.setX(playButton.x);
-            hoverImg.setY(playButton.y+50);
+            hoverImg.setX(playButton.x-80);
+            hoverImg.setY(playButton.y);
             this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
         })
 
@@ -83,8 +88,8 @@ export class MainMenuScene extends Phaser.Scene {
 
         optionsButton.on("pointerover", () => {
             hoverImg.setVisible(true);
-            hoverImg.setX(optionsButton.x);
-            hoverImg.setY(optionsButton.y+50);
+            hoverImg.setX(optionsButton.x-80);
+            hoverImg.setY(optionsButton.y);
             this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
         })
 
@@ -101,8 +106,8 @@ export class MainMenuScene extends Phaser.Scene {
         quitButton.setInteractive();
         quitButton.on("pointerover", () => {
             hoverImg.setVisible(true);
-            hoverImg.setX(quitButton.x);
-            hoverImg.setY(quitButton.y+50);
+            hoverImg.setX(quitButton.x-80);
+            hoverImg.setY(quitButton.y);
             this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
         })
 

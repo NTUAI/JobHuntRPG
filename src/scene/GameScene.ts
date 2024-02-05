@@ -26,9 +26,13 @@ export class GameScene extends Phaser.Scene {
     super({ key: CST.SCENES.PLAY });
   }
 
+  preload(): void {
+
+  }
+
   create(): void {
     this.bg = this.add.tileSprite(256, 256, this.game.renderer.width, this.game.renderer.height, CST.IMAGE.HR_ROOM)
-    this.player = this.physics.add.sprite(100, 400, "player")
+    this.player = this.physics.add.sprite(100, 400, CST.IMAGE.PLAYER).setScale(0.2)
 
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.shift = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
@@ -125,11 +129,6 @@ export class GameScene extends Phaser.Scene {
 
   handleKeyboard() {
 
-    if(this.esc.isDown) {
-        this.sound.stopAll();
-        this.scene.start(CST.SCENES.MENU);
-    }
-
     let speed = this.shift.isDown ? 250 : 150;
     // run
     if(this.shift.isDown) {
@@ -163,7 +162,10 @@ export class GameScene extends Phaser.Scene {
     };
 
     // ESC input
-    
+    if(this.esc.isDown) {
+        this.sound.stopAll();
+        this.scene.start(CST.SCENES.MENU);
+    }
 
     // if the user presses ESC, overlay the menu
     // menu: Resume, Sound, Exit

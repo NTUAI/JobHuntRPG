@@ -12,11 +12,14 @@ export const CST = {
         QUIT: "quit.png",
         HOVER: "hover.png",
         
+        PLAYER: "player.png",
         HR_ROOM: "ceo.png"
+        
     },
     AUDIO: {
         TITLE_MUSIC: "title.mp3",
         TITLE_AUDIO: "seagull_sea.mp3",
+        TITLE_START: "start_sound.mp3",
         GAME_MUSIC: "celtic.mp3",
         GAME_AUDIO: "ship.mp3",
         SELECT: "select.mp3"

@@ -15,7 +15,7 @@ export const CST = {
         
         PLAYER: "player.png",
         CEO_ROOM: "ceo.png",
-        HR_ROOM: "room7.png"  
+        HR_ROOM: "HR_room.jpg"
     },
     AUDIO: {
         TITLE_MUSIC: "title.mp3",

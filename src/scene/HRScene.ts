@@ -80,9 +80,7 @@ export class HRScene extends Phaser.Scene {
   } */
 
   update() {    
-
     this.handleKeyboard()
-
   }
 
   handleKeyboard() {

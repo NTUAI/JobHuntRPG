@@ -30,7 +30,7 @@ export class CEOScene extends Phaser.Scene {
   }
 
   preload(): void {
-
+    
   }
 
   create(): void {
@@ -82,16 +82,20 @@ export class CEOScene extends Phaser.Scene {
   } */
 
   toHR(): void {
-    this.sound.stopAll();
+    //this.sound.stopAll()
     FadeUtils.fadeOut(this, 2000, (callback) => {
-        console.log("Switching to HR scene")
+        console.log("Switching from CEO sceen to HR scene")
         this.scene.start(CST.SCENE.HR);
+        this.scene.stop(CST.SCENE.CEO);
+        this.sound.stopAll();
     });
   }
 
   update() {    
     this.handleKeyboard()
     if(this.player.y >= this.renderer.height) {
+      this.player.y = 0;
+      this.player.setInteractive(false);
       this.toHR();
     }
   }

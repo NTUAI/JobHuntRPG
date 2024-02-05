@@ -1,8 +1,9 @@
 import Phaser from 'phaser';
 import { CST } from "../CST";
 import { FadeUtils } from '../FadeUtils';
+import { SpeechBubble } from '../SpeechBubble';
 
-export class GameScene extends Phaser.Scene {
+export class CEOScene extends Phaser.Scene {
   // environment images
   private bg!: Phaser.GameObjects.TileSprite;
   
@@ -22,9 +23,10 @@ export class GameScene extends Phaser.Scene {
   
   // character
   private player!: Phaser.Physics.Arcade.Sprite;
+  private speechBubble: ReturnType<typeof SpeechBubble.createSpeechBubble> | null = null;
 
   constructor() {
-    super({ key: CST.SCENES.PLAY });
+    super({ key: CST.SCENE.CEO });
   }
 
   preload(): void {
@@ -36,7 +38,7 @@ export class GameScene extends Phaser.Scene {
         console.log("Game Scene activated")
     });
 
-    this.bg = this.add.tileSprite(256, 256, this.game.renderer.width, this.game.renderer.height, CST.IMAGE.HR_ROOM)
+    this.bg = this.add.tileSprite(256, 256, this.game.renderer.width, this.game.renderer.height, CST.IMAGE.CEO_ROOM)
     this.player = this.physics.add.sprite(250, 450, CST.IMAGE.PLAYER).setScale(0.2)
 
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -51,8 +53,8 @@ export class GameScene extends Phaser.Scene {
     
 
     // scene boundaries
-    this.physics.world.setBounds(50, 80, this.game.renderer.width-80, this.game.renderer.width-115);
-    this.player.setCollideWorldBounds(true);
+    //this.physics.world.setBounds(50, 80, this.game.renderer.width-80, this.game.renderer.width-115);
+    //this.player.setCollideWorldBounds(true);
     
     // ship sound effects
     this.ship = this.sound.add(CST.AUDIO.GAME_AUDIO, { loop: true });
@@ -79,61 +81,22 @@ export class GameScene extends Phaser.Scene {
     this.bg.tilePositionX;
   } */
 
-  createSpeechBubble(x, y, w, h, text) {
-    const bubbleWidth = w;
-    const bubbleHeight = h;
-    const bubblePadding = 10;
-    const arrowHeight = bubbleHeight / 4;
-
-    const bubble = this.add.graphics({ x: x, y: y });
-    
-    //  Bubble shadow
-    bubble.fillStyle(0x222222, 0.5);
-    bubble.fillRoundedRect(6, 6, bubbleWidth, bubbleHeight, 16);
-
-    //  Bubble color
-    bubble.fillStyle(0xffffff, 1);
-
-    //  Bubble outline line style
-    bubble.lineStyle(4, 0x565656, 1);
-
-    //  Bubble shape and outline
-    bubble.strokeRoundedRect(0, 0, bubbleWidth, bubbleHeight, 16);
-    bubble.fillRoundedRect(0, 0, bubbleWidth, bubbleHeight, 16);
-
-    //  Calculate arrow coordinates
-    const point1X = Math.floor(bubbleWidth / 7);
-    const point1Y = bubbleHeight;
-    const point2X = Math.floor((bubbleWidth / 7) * 2);
-    const point2Y = bubbleHeight;
-    const point3X = Math.floor(bubbleWidth / 7);
-    const point3Y = Math.floor(bubbleHeight + arrowHeight);
-
-    //  Bubble arrow shadow
-    bubble.lineStyle(4, 0x222222, 0.5);
-    bubble.lineBetween(point2X - 1, point2Y + 6, point3X + 2, point3Y);
-
-    //  Bubble arrow fill
-    bubble.fillTriangle(point1X, point1Y, point2X, point2Y, point3X, point3Y);
-    bubble.lineStyle(2, 0x565656, 1);
-    bubble.lineBetween(point2X, point2Y, point3X, point3Y);
-    bubble.lineBetween(point1X, point1Y, point3X, point3Y);
-
-    const content = this.add.text(0, 0, text, { fontFamily: 'Arial', fontSize: '20', color: '#000000', align: 'center', wordWrap: { width: bubbleWidth - (bubblePadding * 2) } });
-
-    const b = content.getBounds();
-
-    content.setPosition(bubble.x + (bubbleWidth / 2) - (b.width / 2), bubble.y + (bubbleHeight / 2) - (b.height / 2));
-  } 
+  toHR(): void {
+    this.sound.stopAll();
+    FadeUtils.fadeOut(this, 2000, (callback) => {
+        console.log("Switching to HR scene")
+        this.scene.start(CST.SCENE.HR);
+    });
+  }
 
   update() {    
-
     this.handleKeyboard()
-
+    if(this.player.y >= this.renderer.height) {
+      this.toHR();
+    }
   }
 
   handleKeyboard() {
-
     let speed = this.shift.isDown ? 250 : 150;
     // run
     if(this.shift.isDown) {
@@ -163,13 +126,17 @@ export class GameScene extends Phaser.Scene {
 
     // speech and interaction (chat bubble currently)
     if(Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-      this.createSpeechBubble(this.player.x - 50, this.player.y - 80, 100, 50, 'This is a test speech bubble for EosRPG.')
+        if (this.speechBubble) {
+            this.speechBubble.destroy(); // or .setVisible(false) based on your implementation
+        }
+    
+        this.speechBubble = SpeechBubble.createSpeechBubble(this, this.player.x - 50, this.player.y - 120, 130, 50, 'This is a test speech bubble for EosRPG.');
     };
 
     // ESC input
     if(this.esc.isDown) {
         this.sound.stopAll();
-        this.scene.start(CST.SCENES.MENU);
+        this.scene.start(CST.SCENE.MENU);
     }
 
     // if the user presses ESC, overlay the menu

@@ -1,7 +1,7 @@
-import {CST} from "../CST";
+import { CST } from "../CST";
 export class LoadingScene extends Phaser.Scene {
     constructor() {
-        super({key: CST.SCENES.LOAD});
+        super({key: CST.SCENE.LOAD});
     }
 
     init() {}
@@ -80,7 +80,7 @@ export class LoadingScene extends Phaser.Scene {
         }
 
         this.load.on("complete", () => {
-            this.scene.start(CST.SCENES.MENU);
+            this.scene.start(CST.SCENE.MENU);
         });
 
         this.load.on("load", (file: Phaser.Loader.File) => {

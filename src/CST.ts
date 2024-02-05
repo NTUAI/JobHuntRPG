@@ -1,8 +1,9 @@
 export const CST = {
-    SCENES: {
+    SCENE: {
         LOAD: "LOAD",
         MENU: "MENU",
-        PLAY: "PLAY"
+        CEO: "CEO",
+        HR: "HR"
     },
     IMAGE: {
         LOADING: "loading.png",
@@ -13,8 +14,8 @@ export const CST = {
         HOVER: "hover.png",
         
         PLAYER: "player.png",
-        HR_ROOM: "ceo.png"
-        
+        CEO_ROOM: "ceo.png",
+        HR_ROOM: "room7.png"  
     },
     AUDIO: {
         TITLE_MUSIC: "title.mp3",

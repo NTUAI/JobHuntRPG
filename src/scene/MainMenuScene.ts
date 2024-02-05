@@ -3,11 +3,25 @@ import { FadeUtils } from "../FadeUtils";
 export class MainMenuScene extends Phaser.Scene {
     constructor() {
         super({
-            key: CST.SCENES.MENU
+            key: CST.SCENE.MENU
         })
     }
 
     init() {}
+
+    toCEO(): void {
+        let a = this.sound.add(CST.AUDIO.TITLE_START, {volume: 1});
+        this.sound.stopAll();
+        a.play();
+
+        const fadeDuration = 5000; // 1 second
+
+        // Start fading to black. The color is specified in hex (0xRRGGBB). 0x000000 is black.
+        FadeUtils.fadeOut(this, 5000, (callback) => {
+            console.log("Game starting")
+            this.scene.start(CST.SCENE.CEO);
+        });
+    }
 
     create() {
         this.sound.add(CST.AUDIO.TITLE_AUDIO, { loop: true }).play();
@@ -57,28 +71,11 @@ export class MainMenuScene extends Phaser.Scene {
         })
 
         playButton.on("pointerup", () => {
-            let a = this.sound.add(CST.AUDIO.TITLE_START, {volume: 1});
-            this.sound.stopAll();
-            a.play();
+            playButton.setVisible(false);
             optionsButton.setVisible(false);
             quitButton.setVisible(false);
-
-            const fadeDuration = 5000; // 1 second
-
-            // Start fading to black. The color is specified in hex (0xRRGGBB). 0x000000 is black.
-            /*this.cameras.main.fade(fadeDuration, 0, 0, 0, false, (camera, progress) => {
-                if (progress === 1) {
-                    // This callback function is called when the fade completes.
-                    // Switch to the target scene here.
-                    
-                    this.scene.start(CST.SCENES.PLAY);
-                }
-            });*/
-            FadeUtils.fadeOut(this, 5000, (callback) => {
-                console.log("aoiwejfoaisjdfo isamfowei noaiwfdj oisajof iejwoiajf oiejo ")
-                this.scene.start(CST.SCENES.PLAY);
-            });
-
+            hoverImg.setVisible(false);
+            this.toCEO();
         });
 
         // options button

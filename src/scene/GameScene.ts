@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import {CST} from "../CST";
+import { CST } from "../CST";
+import { FadeUtils } from '../FadeUtils';
 
 export class GameScene extends Phaser.Scene {
   // environment images
@@ -31,8 +32,12 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(): void {
+    FadeUtils.fadeIn(this, 2000, (callback) => {
+        console.log("Game Scene activated")
+    });
+
     this.bg = this.add.tileSprite(256, 256, this.game.renderer.width, this.game.renderer.height, CST.IMAGE.HR_ROOM)
-    this.player = this.physics.add.sprite(100, 400, CST.IMAGE.PLAYER).setScale(0.2)
+    this.player = this.physics.add.sprite(250, 450, CST.IMAGE.PLAYER).setScale(0.2)
 
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.shift = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);

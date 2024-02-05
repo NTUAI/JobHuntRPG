@@ -93,6 +93,7 @@ export class CEOScene extends Phaser.Scene {
 
   update() {    
     this.handleKeyboard()
+
     if(this.player.y >= this.renderer.height) {
       this.player.y = 0;
       this.player.setInteractive(false);

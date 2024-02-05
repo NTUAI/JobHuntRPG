@@ -42,7 +42,7 @@ export class SpeechBubble {
         bubble.lineBetween(point1X, point1Y, point3X, point3Y);
 
         // Add text content to the bubble
-        const content = scene.add.text(0, 0, text, { fontFamily: 'Arial', fontSize: '20px', color: '#000000', align: 'center', wordWrap: { width: bubbleWidth - (bubblePadding * 2) } });
+        const content = scene.add.text(0, 0, text, { fontFamily: 'Arial', fontSize: '12px', color: '#000000', align: 'center', wordWrap: { width: bubbleWidth - (bubblePadding * 2) } });
         content.setPosition(x + (bubbleWidth / 2) - (content.width / 2), y + (bubbleHeight / 2) - (content.height / 2));
 
         // Group bubble and text together using a container

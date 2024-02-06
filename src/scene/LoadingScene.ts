@@ -47,6 +47,7 @@ export class LoadingScene extends Phaser.Scene {
         //load images, audio, spritesheets
         this.loadImages();
         this.loadAudio();
+
         /*this.loadSprites({
             frameHeight: 32,
             frameWidth: 32
@@ -80,6 +81,7 @@ export class LoadingScene extends Phaser.Scene {
         }
 
         this.load.on("complete", () => {
+            this.game.canvas.style.cursor = `url('assets/images/cursor1.png'), pointer`;
             this.scene.start(CST.SCENE.MENU);
         });
 

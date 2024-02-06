@@ -24,6 +24,10 @@ export class MainMenuScene extends Phaser.Scene {
     }
 
     create() {
+        //console.log(`Starting to load from directory: ${this.load.path}`);
+        this.game.canvas.style.cursor = `url('assets/images/cursor2.png'), default`;
+        //this.game.canvas.style.cursor = `url('assets/images/cursor1.png'), pointer`;
+        //const sprite = this.add.sprite(400, 300, 'eye').setInteractive({ cursor: 'url(assets/images/cursor1.png), pointer' });
         // alert("test");
         FadeUtils.fadeIn(this, 2000, (callback) => {
             console.log("MainMenuScene activated")
@@ -65,6 +69,7 @@ export class MainMenuScene extends Phaser.Scene {
         playButton.setInteractive();
 
         playButton.on("pointerover", () => {
+            playButton.setX(playButton.x-10);
             hoverImg.setVisible(true);
             hoverImg.setX(playButton.x-80);
             hoverImg.setY(playButton.y);
@@ -72,6 +77,7 @@ export class MainMenuScene extends Phaser.Scene {
         })
 
         playButton.on("pointerout", () => {
+            playButton.setX(playButton.x+10);
             hoverImg.setVisible(false);
         })
 
@@ -87,6 +93,7 @@ export class MainMenuScene extends Phaser.Scene {
         optionsButton.setInteractive();
 
         optionsButton.on("pointerover", () => {
+            optionsButton.setX(optionsButton.x-10);
             hoverImg.setVisible(true);
             hoverImg.setX(optionsButton.x-80);
             hoverImg.setY(optionsButton.y);
@@ -94,6 +101,7 @@ export class MainMenuScene extends Phaser.Scene {
         })
 
         optionsButton.on("pointerout", () => {
+            optionsButton.setX(optionsButton.x+10);
             hoverImg.setVisible(false);
         })
 
@@ -105,22 +113,24 @@ export class MainMenuScene extends Phaser.Scene {
         // quit button
         quitButton.setInteractive();
         quitButton.on("pointerover", () => {
+            quitButton.setX(quitButton.x-10);
             hoverImg.setVisible(true);
             hoverImg.setX(quitButton.x-80);
             hoverImg.setY(quitButton.y);
             this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
         })
 
-        optionsButton.on("pointerout", () => {
+        quitButton.on("pointerout", () => {
+            quitButton.setX(quitButton.x+10);
             hoverImg.setVisible(false);
         })
         quitButton.on("pointerup", () => {
             window.location.href = "https://eosphor.us";
         })
 
-        quitButton.on("pointerout", () => {
+        /*quitButton.on("pointerout", () => {
             hoverImg.setVisible(false);
-        })
+        })*/
 
     }
 }

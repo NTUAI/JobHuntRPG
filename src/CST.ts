@@ -19,7 +19,9 @@ export const CST = {
 
         FET_LOGO: "FET_logo.png",
         NTUAI_LOGO: "NTUAI_logo.png",
-        EOSRPG_LOGO: "EosRPG_logo.png"
+        EOSRPG_LOGO: "EosRPG_logo.png",
+
+        CURSOR_1: "cursor2.png"
     },
     AUDIO: {
         TITLE_MUSIC: "title.mp3",

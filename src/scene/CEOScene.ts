@@ -91,8 +91,19 @@ export class CEOScene extends Phaser.Scene {
     });
   }
 
+  updateSpeechBubblePosition(): void {
+    if (this.speechBubble) {
+      // Adjust these offsets to position the speech bubble correctly relative to your player sprite
+      const offsetX = -200; // This is just an example, adjust as needed
+      const offsetY = -340; // This is just an example, adjust as needed
+      
+      this.speechBubble.setPosition(this.player.x + offsetX, this.player.y + offsetY);
+    }
+  }
+
   update() {    
     this.handleKeyboard()
+    this.updateSpeechBubblePosition();
 
     if(this.player.y >= this.renderer.height) {
       this.player.y = 0;
@@ -102,13 +113,18 @@ export class CEOScene extends Phaser.Scene {
   }
 
   handleKeyboard() {
+
     let speed = this.shift.isDown ? 250 : 150;
+
+    
     // run
     if(this.shift.isDown) {
       speed = 250;
     }
 
     this.player.setVelocityY(0)
+    
+
     // go up
     if(this.cursors.up.isDown || this.w.isDown) {
       this.player.setVelocity(0, -speed);
@@ -131,12 +147,22 @@ export class CEOScene extends Phaser.Scene {
 
     // speech and interaction (chat bubble currently)
     if(Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-        if (this.speechBubble) {
-            this.speechBubble.destroy(); // or .setVisible(false) based on your implementation
-        }
-    
-        this.speechBubble = SpeechBubble.createSpeechBubble(this, this.player.x - 50, this.player.y - 120, 130, 50, 'This is a test speech bubble for EosRPG.');
-    };
+      if (this.speechBubble) {
+        this.speechBubble.destroy(); // or .setVisible(false) based on your implementation
+      }
+  
+      // Calculate the speech bubble's position based on the player's current position
+      const bubbleOffsetX = 0; // Adjust as needed
+      const bubbleOffsetY = -this.player.displayHeight * this.player.scaleY; // Position above the player
+      
+      this.speechBubble = SpeechBubble.createSpeechBubble(
+        this, 
+        this.player.x + bubbleOffsetX, 
+        this.player.y + bubbleOffsetY, 
+        130, 
+        50, 
+        'This is a test speech bubble for EosRPG.'
+      );    };
 
     // ESC input
     if(this.esc.isDown) {
@@ -149,27 +175,3 @@ export class CEOScene extends Phaser.Scene {
     // if the user presses ESC again, then get rid of the overlay
   }
 }
-
-/*class MainMenu extends Phaser.Scene {
-  constructor() {
-      super({ key: 'MainMenu' });
-  }
-
-  preload() {
-      // Preload assets for the menu (e.g., images, sounds)
-  }
-
-  create() {
-      // Create title text, menu options, etc.
-      this.add.text(100, 100, 'Main Menu', { font: '40px Arial', color: '#ffffff' });
-
-      // Example of adding a start game option
-      let startGameText = this.add.text(100, 200, 'Start Game', { font: '32px Arial', color: '#ffffff' });
-      startGameText.setInteractive({ useHandCursor: true });
-      startGameText.on('pointerdown', () => this.scene.start('Game')); // Assuming 'Game' is the key of your game scene
-  }
-
-  update() {
-      // The main menu typically doesn't need to update anything continuously
-  }
-}*/

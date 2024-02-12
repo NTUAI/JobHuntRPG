@@ -25,7 +25,7 @@ export class MainMenuScene extends Phaser.Scene {
 
     create() {
         //console.log(`Starting to load from directory: ${this.load.path}`);
-        this.game.canvas.style.cursor = `url('assets/images/cursor2.png'), default`;
+        this.game.canvas.style.cursor = `url('assets/images/cursor1.png'), default`;
         //this.game.canvas.style.cursor = `url('assets/images/cursor1.png'), pointer`;
         //const sprite = this.add.sprite(400, 300, 'eye').setInteractive({ cursor: 'url(assets/images/cursor1.png), pointer' });
         // alert("test");
@@ -43,6 +43,16 @@ export class MainMenuScene extends Phaser.Scene {
         let quitButton = this.add.image(470, 250, CST.IMAGE.QUIT).setDepth(1).setScale(0.4);
         let EosRPG = this.add.image(400, 400, CST.IMAGE.EOSRPG_LOGO).setDepth(1).setScale(0.4);
         let hoverImg = this.add.image(100, 100, CST.IMAGE.HOVER).setScale(0.15).setVisible(false);
+
+        // Example of creating a volume slider (simplified)
+        let volumeSliderTrack = this.add.graphics().setVisible(false);
+        volumeSliderTrack.fillStyle(0x888888, 1);
+        volumeSliderTrack.fillRect(400, 300, 150, 20); // Just an example position and size
+
+        let volumeSliderKnob = this.add.graphics().setVisible(false);
+        volumeSliderKnob.fillStyle(0xffffff, 1);
+        volumeSliderKnob.fillRect(525, 295, 30, 30); // Position this based on current volume
+
 
         //create sprites (if using pixel art, remove sharpen)
         /*let hoverSprite: Phaser.GameObjects.Sprite = this.add.sprite(100, 100, CST.SPRITE.CAT);
@@ -106,7 +116,15 @@ export class MainMenuScene extends Phaser.Scene {
         })
 
         optionsButton.on("pointerup", () => {
-            //this.scene.launch();
+            playButton.setVisible(false);
+            optionsButton.setVisible(false);
+            quitButton.setVisible(false);
+            hoverImg.setVisible(false);     
+            
+            // Show volume controls
+            volumeSliderTrack.setVisible(true);
+            volumeSliderKnob.setVisible(true);
+
         })
 
 

@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 
 import { LoadingScene } from "./scene/LoadingScene"
 import { MainMenuScene } from "./scene/MainMenuScene"
+import { OptionsScene } from './scene/OptionsScene'
 import { CEOScene } from "./scene/CEOScene"
 import { HRScene  } from "./scene/HRScene"
 
@@ -14,7 +15,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
     height: 512,
   },
   backgroundColor: '#5c5b5b',
-  scene: [LoadingScene, MainMenuScene, CEOScene, HRScene],
+  scene: [LoadingScene, MainMenuScene,OptionsScene, CEOScene, HRScene],
   physics: {
     default: "arcade",
     arcade: {

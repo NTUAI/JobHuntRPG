@@ -2,6 +2,7 @@ export const CST = {
     SCENE: {
         LOAD: "LOAD",
         MENU: "MENU",
+        OPTIONS: "OPTIONS",
         CEO: "CEO",
         HR: "HR"
     },

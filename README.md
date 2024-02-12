@@ -4,6 +4,10 @@ An RPG that lets you discover about [Eosphorus](https://eosphor.us), our project
 
 EosRPG is a Phaser 3 TypeScript web app game that is linked directly to our website.
 
+
+
+## Files
+
 - *main.ts* initializes the core game configuration and scenes, setting up the Phaser game environment with arcade physics and a pixel art style.
 - *CST.ts* defines constants for scene identifiers, asset paths (images and audio), and sprite keys, serving as a centralized resource reference for the game.
 - *FadeUtils.ts* provides utility functions for smooth scene transitions, offering fadeIn and fadeOut effects that enhance the visual experience of transitioning between game scenes.
@@ -16,9 +20,19 @@ EosRPG is a Phaser 3 TypeScript web app game that is linked directly to our webs
     - *HRScene.ts* transitions the player to the HR office setting.
 
 
-### Requirements
+## TODO
+- Finish audio sliders with draggable adjustment for both music and sound effects
+- Design and implement tile set
+- Character sprites for the following characters: player (man), player (woman), HR officer, CEO, engineer
+- Consider adding character selection menu
+- Fix speech bubble bug
+- Implement text notification and speech UI
+- Add UI class that overlays each scene in game. The UI should include: inventory (bottom), text chat/notification system (bottom left), and character information (top right).
+- Backend needs to be updated from NodeJS to Django.
 
-### Available Commands
+## Requirements
+
+## Available Commands
 
 | Command | Description |
 |---------|-------------|
@@ -27,4 +41,4 @@ EosRPG is a Phaser 3 TypeScript web app game that is linked directly to our webs
 | `yarn build` | Builds code bundle for production |
 | `yarn lint` | Uses ESLint to lint code |
 
-### Deployment
+## Deployment

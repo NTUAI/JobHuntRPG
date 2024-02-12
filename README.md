@@ -1,18 +1,22 @@
-# Phaser 3 TypeScript - Parallax Scrolling Background
+# EosRPG - Eosphorus Pirate Game
 
-A Phaser 3 TypeScript example of a parallax scrolling background.
+An RPG that lets you discover about [Eosphorus](https://eosphor.us), our project submission to Far East Telecom's co-hosted competition with [ATCC 2023](https://atcc.co/21statcc/).
 
-Parallax scrolling is a technique where background images move past the camera more slowly than foreground images, which can be used to create an illusion of depth in 2D games.
+EosRPG is a Phaser 3 TypeScript web app game that is linked directly to our website.
 
-**Credit:** The images used in this demo were created by [Ansimuz](www.ansimuz.com).
+- *main.ts* initializes the core game configuration and scenes, setting up the Phaser game environment with arcade physics and a pixel art style.
+- *CST.ts* defines constants for scene identifiers, asset paths (images and audio), and sprite keys, serving as a centralized resource reference for the game.
+- *FadeUtils.ts* provides utility functions for smooth scene transitions, offering fadeIn and fadeOut effects that enhance the visual experience of transitioning between game scenes.
+- *SpeechBubble.ts* crafts customizable speech bubbles for in-game dialogue, dynamically generating them with tailored positioning, sizing, and text content.
+- Scenes
+    - *MainMenuScene.ts* orchestrates the game's main menu, integrating interactive buttons for navigation, audio management, and a floating logo effect, setting the stage for player interaction.
+    - *OptionsScene.ts* provides a user interface for audio settings, featuring an interactive volume slider that allows players to adjust the game's sound levels.
+    - *LoadingScene.ts* meticulously handles the preloading of game assets, including images and audio, while displaying a loading progress bar to inform players as assets are being loaded.
+    - *CEOScene.ts* crafts an immersive office environment for the CEO level.
+    - *HRScene.ts* transitions the player to the HR office setting.
 
-## Local Development
 
 ### Requirements
-
-[Node.js](https://nodejs.org) and [Yarn](https://yarnpkg.com/) are required to install dependencies and run scripts via `yarn`.
-
-[Vite](https://vitejs.dev/) is required to bundle and serve the web application. This is included as part of the projects dev dependencies.
 
 ### Available Commands
 
@@ -23,23 +27,4 @@ Parallax scrolling is a technique where background images move past the camera m
 | `yarn build` | Builds code bundle for production |
 | `yarn lint` | Uses ESLint to lint code |
 
-### Writing Code
-
-After cloning the repo, run `yarn install --frozen-lockfile` from your project directory. Then, you can start the local development
-server by running `yarn start`.
-
-After starting the development server with `yarn start`, you can edit any files in the `src` folder
-and parcel will automatically recompile and reload your server (available at `http://localhost:8080`
-by default).
-
-### Deploying Code
-
-After you run the `yarn build` command, your code will be built into a single bundle located at
-`dist/*` along with any other assets you project depended.
-
-If you put the contents of the `dist` folder in a publicly-accessible location (say something like `http://myserver.com`),
-you should be able to open `http://myserver.com/index.html` and play your game.
-
-### Static Assets
-
-Any static assets like images or audio files should be placed in the `public` folder. It'll then be served at `http://localhost:8080/path-to-file-your-file/file-name.file-type`.
+### Deployment

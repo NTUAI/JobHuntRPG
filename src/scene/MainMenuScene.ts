@@ -23,13 +23,15 @@ export class MainMenuScene extends Phaser.Scene {
         });
     }
 
+
+    
     create() {
         //console.log(`Starting to load from directory: ${this.load.path}`);
         this.game.canvas.style.cursor = `url('assets/images/cursor1.png'), default`;
         //this.game.canvas.style.cursor = `url('assets/images/cursor1.png'), pointer`;
         //const sprite = this.add.sprite(400, 300, 'eye').setInteractive({ cursor: 'url(assets/images/cursor1.png), pointer' });
         // alert("test");
-        FadeUtils.fadeIn(this, 2000, (callback) => {
+        FadeUtils.fadeIn(this, 4000, (callback) => {
             console.log("MainMenuScene activated")
         });
         this.sound.add(CST.AUDIO.TITLE_AUDIO, { loop: true }).play();
@@ -44,24 +46,15 @@ export class MainMenuScene extends Phaser.Scene {
         let EosRPG = this.add.image(400, 400, CST.IMAGE.EOSRPG_LOGO).setDepth(1).setScale(0.4);
         let hoverImg = this.add.image(100, 100, CST.IMAGE.HOVER).setScale(0.15).setVisible(false);
 
-        // Example of creating a volume slider (simplified)
-        let volumeSliderTrack = this.add.graphics().setVisible(false);
-        volumeSliderTrack.fillStyle(0x888888, 1);
-        volumeSliderTrack.fillRect(400, 300, 150, 20); // Just an example position and size
-
-        let volumeSliderKnob = this.add.graphics().setVisible(false);
-        volumeSliderKnob.fillStyle(0xffffff, 1);
-        volumeSliderKnob.fillRect(525, 295, 30, 30); // Position this based on current volume
-
-
-        //create sprites (if using pixel art, remove sharpen)
-        /*let hoverSprite: Phaser.GameObjects.Sprite = this.add.sprite(100, 100, CST.SPRITE.CAT);
-        hoverSprite.setScale(2);
-        hoverSprite.setVisible(false);*/
-
-        //create audio, disable pauseonblur
-        //this.sound.pauseOnBlur = false;
-        //this.sound.play(CST.AUDIO.TITLE, {loop: true})
+        this.tweens.add({
+            targets: EosRPG,
+            y: '-=20', // Moves up by 20 pixels
+            ease: 'Sine.inOut', // Smooth transition for a natural floating effect
+            duration: 2000, // Duration of one rise/fall cycle
+            yoyo: true, // Automatically reverses the tween to create a up and down motion
+            repeat: -1 // Infinite loop
+        });
+    
 
         //create animation
 
@@ -122,8 +115,44 @@ export class MainMenuScene extends Phaser.Scene {
             hoverImg.setVisible(false);     
             
             // Show volume controls
-            volumeSliderTrack.setVisible(true);
-            volumeSliderKnob.setVisible(true);
+
+                    let track, knob;
+
+        // Create the slider track
+        track = this.add.graphics()
+            .fillStyle(0x555555, 1)
+            .fillRect(400, 300, 150, 20);
+    
+        // Create the slider knob
+        knob = this.add.graphics()
+            .fillStyle(0xffffff, 1)
+            .fillCircle(475, 310, 10)
+            .setInteractive({ cursor: 'pointer' });
+    
+        // Make the knob draggable
+        this.input.setDraggable(knob);
+    
+        // Define the drag behavior
+        knob.on('drag', (pointer, dragX, dragY) => {
+            // Constrain the knob to the track
+            const minX = 400 + 10; // 10 is half the width of the knob for margin
+            const maxX = 550 - 10; // Track width - half the width of the knob for margin
+            dragX = Phaser.Math.Clamp(dragX, minX, maxX);
+    
+            // Update the knob's position
+            knob.x = dragX;
+    
+            // Update the volume based on knob's position
+            // Map the knob's position to a 0-1 range for volume
+            const volume = Phaser.Math.Clamp((dragX - minX) / (maxX - minX), 0, 1);
+            this.sound.volume = volume;
+            console.log(`Volume set to: ${volume}`);
+        });
+    
+        // Enable dragging
+        this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+            gameObject.x = dragX;
+        });
 
         })
 

@@ -37,14 +37,27 @@ export class MainMenuScene extends Phaser.Scene {
         this.sound.add(CST.AUDIO.TITLE_AUDIO, { loop: true }).play();
         this.sound.add(CST.AUDIO.TITLE_MUSIC, { volume: 0.3, loop: true }).play();
 
+        let graphics = this.add.graphics();
+      
+
         //create images (z order)
         //this.add.image(this.game.renderer.width / 2, this.game.renderer.height * 0.20, CST.IMAGE.LOGO).setDepth(1);
-        this.add.image(0, 0, CST.IMAGE.TITLE).setOrigin(0).setDepth(0).setScale(0.5);
+        this.add.image(0, 0, CST.IMAGE.TITLE).setOrigin(0).setDepth(0).setScale(0.55);
+
+        graphics.fillStyle(0x000000, 1); // The '1' is the alpha for full opacity
+        graphics.fillRect(0, 512, 512, 100); // Fill a rectangle from (0, 512) to (512, 612)
+
+
         let playButton = this.add.image(470, 50, CST.IMAGE.PLAY).setDepth(1).setScale(0.4);
         let optionsButton = this.add.image(470, 150, CST.IMAGE.OPTIONS).setDepth(1).setScale(0.4);
         let quitButton = this.add.image(470, 250, CST.IMAGE.QUIT).setDepth(1).setScale(0.4);
-        let EosRPG = this.add.image(400, 400, CST.IMAGE.EOSRPG_LOGO).setDepth(1).setScale(0.4);
         let hoverImg = this.add.image(100, 100, CST.IMAGE.HOVER).setScale(0.15).setVisible(false);
+
+        //let board = this.add.image(180, 562, CST.IMAGE.BOARD).setDepth(1).setScale(0.8);
+        let EosRPG = this.add.image(256, 500, CST.IMAGE.EOSRPG_LOGO).setDepth(1).setScale(0.4);
+        let NTUAI_Button = this.add.image(90, 550, CST.IMAGE.NTUAI_LOGO).setDepth(1).setScale(0.25);
+        //let FET_Button = this.add.image(300, 550, CST.IMAGE.FET_LOGO).setDepth(1).setScale(0.1);
+        let ATCC_Button = this.add.image(422, 550, CST.IMAGE.ATCC_LOGO).setDepth(1).setScale(0.25);
 
         this.tweens.add({
             targets: EosRPG,
@@ -175,9 +188,40 @@ export class MainMenuScene extends Phaser.Scene {
             window.location.href = "https://eosphor.us";
         })
 
-        /*quitButton.on("pointerout", () => {
-            hoverImg.setVisible(false);
-        })*/
+
+        // NTUAI button
+        NTUAI_Button.setInteractive();
+
+        NTUAI_Button.on("pointerover", () => {
+            NTUAI_Button.setScale(0.28);
+            this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
+        })
+
+        NTUAI_Button.on("pointerout", () => {
+            NTUAI_Button.setScale(0.25);
+        })
+
+        NTUAI_Button.on("pointerup", () => {
+            window.location.href = "https://ntuai.club";
+        })
+
+
+        // Eosphorus button
+        ATCC_Button.setInteractive();
+
+        ATCC_Button.on("pointerover", () => {
+            ATCC_Button.setScale(0.28);
+            this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
+        })
+
+        ATCC_Button.on("pointerout", () => {
+            ATCC_Button.setScale(0.25);
+        })
+
+        ATCC_Button.on("pointerup", () => {
+            window.location.href = "https://atcc.co/21statcc/";
+        })
+
 
     }
 }

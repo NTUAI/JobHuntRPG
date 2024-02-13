@@ -12,7 +12,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
   scale: {
     parent: 'game-container',
     width: 512,
-    height: 512,
+    height: 612,
   },
   backgroundColor: '#5c5b5b',
   scene: [LoadingScene, MainMenuScene,OptionsScene, CEOScene, HRScene],

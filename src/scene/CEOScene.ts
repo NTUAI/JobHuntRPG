@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { CST } from "../CST";
 import { FadeUtils } from '../FadeUtils';
 import { SpeechBubble } from '../SpeechBubble';
+import { MessagePanel } from '../MessagePanel';
 
 export class CEOScene extends Phaser.Scene {
   // environment images
@@ -23,19 +24,19 @@ export class CEOScene extends Phaser.Scene {
   
   // character
   private player!: Phaser.Physics.Arcade.Sprite;
-  private speechBubble: ReturnType<typeof SpeechBubble.createSpeechBubble> | null = null;
+  private speechBubble!: ReturnType<typeof SpeechBubble.createSpeechBubble>;
+  private messageBox!: MessagePanel;
 
   constructor() {
     super({ key: CST.SCENE.CEO });
+    //this.messageBox = new MessagePanel(this, 100, 100, 200, 300, "Insadfiqwiefwiuh we fiaf i");
   }
 
-  preload(): void {
-    
-  }
+  preload(): void {}
 
   create(): void {
     FadeUtils.fadeIn(this, 2000, (callback) => {
-        console.log("Game Scene activated")
+        console.log("CEO Scene activated")
     });
 
     this.bg = this.add.tileSprite(256, 256, this.game.renderer.width, this.game.renderer.height, CST.IMAGE.CEO_ROOM)
@@ -51,6 +52,9 @@ export class CEOScene extends Phaser.Scene {
 
     // character (temp, need to preload images once character sprite sheet is ready)
     
+    //this.messageBox = new MessagePanel(this, 0, 400, 200, 300, "大家好，我是");
+
+
 
     // scene boundaries
     //this.physics.world.setBounds(50, 80, this.game.renderer.width-80, this.game.renderer.width-115);

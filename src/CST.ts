@@ -8,7 +8,7 @@ export const CST = {
     },
     IMAGE: {
         LOADING: "loading.png",
-        TITLE: "mainmenu.jpg",
+        TITLE: "mainmenu.png",
         PLAY: "play_button.png",
         OPTIONS: "options_button.png",
         QUIT: "quit_button.png",
@@ -17,10 +17,12 @@ export const CST = {
         PLAYER: "player.png",
         CEO_ROOM: "ceo.png",
         HR_ROOM: "HR_room.jpg",
+        BOARD: "board.png",
 
         FET_LOGO: "FET_logo.png",
         NTUAI_LOGO: "NTUAI_logo.png",
         EOSRPG_LOGO: "EosRPG_logo.png",
+        ATCC_LOGO: "ATCC_logo.png",
 
         CURSOR_1: "cursor2.png"
     },

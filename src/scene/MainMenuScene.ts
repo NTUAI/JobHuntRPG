@@ -202,7 +202,7 @@ export class MainMenuScene extends Phaser.Scene {
         })
 
         NTUAI_Button.on("pointerup", () => {
-            window.location.href = "https://ntuai.club";
+            window.open("https://ntuai.club", "_blank");
         })
 
 
@@ -219,7 +219,7 @@ export class MainMenuScene extends Phaser.Scene {
         })
 
         ATCC_Button.on("pointerup", () => {
-            window.location.href = "https://atcc.co/21statcc/";
+            window.open("https://atcc.co/21statcc/", "_blank");
         })
 
 

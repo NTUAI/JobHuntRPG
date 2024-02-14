@@ -11,7 +11,7 @@ export class SpeechBubble {
 
         // Bubble shadow
         bubble.fillStyle(0x222222, 0.5);
-        bubble.fillRoundedRect(x + 6, y + 6, bubbleWidth, bubbleHeight, 16);
+        bubble.fillRoundedRect(x, y, bubbleWidth, bubbleHeight, 16);
 
         // Bubble color
         bubble.fillStyle(0xffffff, 1);

@@ -32,14 +32,14 @@ export class CEOScene extends Phaser.Scene {
     //this.messageBox = new MessagePanel(this, 100, 100, 200, 300, "Insadfiqwiefwiuh we fiaf i");
   }
 
-  preload(): void {}
+  preload(): void {} // this method isn't needed since the loading scene handles it
 
   create(): void {
     FadeUtils.fadeIn(this, 2000, (callback) => {
         console.log("CEO Scene activated")
     });
 
-    this.bg = this.add.tileSprite(256, 256, this.game.renderer.width, this.game.renderer.height, CST.IMAGE.CEO_ROOM)
+    this.bg = this.add.tileSprite(256, 256, this.game.renderer.width, 512, CST.IMAGE.CEO_ROOM)
     this.player = this.physics.add.sprite(250, 450, CST.IMAGE.PLAYER).setScale(0.2)
 
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -53,8 +53,6 @@ export class CEOScene extends Phaser.Scene {
     // character (temp, need to preload images once character sprite sheet is ready)
     
     //this.messageBox = new MessagePanel(this, 0, 400, 200, 300, "大家好，我是");
-
-
 
     // scene boundaries
     //this.physics.world.setBounds(50, 80, this.game.renderer.width-80, this.game.renderer.width-115);
@@ -79,7 +77,12 @@ export class CEOScene extends Phaser.Scene {
         down:Phaser.Input.Keyboard.KeyCodes.S,
         left:Phaser.Input.Keyboard.KeyCodes.A,
         right:Phaser.Input.Keyboard.KeyCodes.D});
-      }
+
+
+      let graphics = this.add.graphics();
+      graphics.fillStyle(0x000000, 1); // The '1' is the alpha for full opacity
+      graphics.fillRect(0, 512, 512, 100); // Fill a rectangle from (0, 512) to (512, 612)
+    }
   // this was for updating the background
   /*update(time: number, delta: number): void {
     this.bg.tilePositionX;
@@ -117,10 +120,9 @@ export class CEOScene extends Phaser.Scene {
   }
 
   handleKeyboard() {
-
+    
     let speed = this.shift.isDown ? 250 : 150;
 
-    
     // run
     if(this.shift.isDown) {
       speed = 250;

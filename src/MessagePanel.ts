@@ -4,6 +4,61 @@ export class MessagePanel {
     private scene: Phaser.Scene;
     private panel: Phaser.GameObjects.Graphics;
     private messages: Phaser.GameObjects.Text[] = [];
+    private x: number;
+    private y: number;
+    private width: number;
+    private height: number;
+    private maxMessages: number = 4;
+
+    constructor(scene: Phaser.Scene, x, y, width, height, message: string) {
+        this.scene = scene;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+
+        this.panel = this.scene.add.graphics({ fillStyle: { color: 0x000000, alpha: 0.5 } });
+        this.addMessage(message);
+        //this.panel.fillRect(x, y, width, height); // can adjust size and position
+        
+        // make the panel scrollable and make it able to display multiple messages
+    }
+
+    addMessage(message: string) {
+        // If we already have the maximum number of messages, remove the first one
+        if (this.messages.length >= this.maxMessages) {
+            const removedMessage = this.messages.shift();
+            removedMessage?.destroy(); // Remove the oldest message from the display
+        }
+
+        // Calculate the Y position of the new message
+        // This places the new message at the bottom of the list
+        const newY = this.y + 10 + (this.messages.length * 22); // Assuming a fixed line height for simplicity
+        const newMessage = this.scene.add.text(this.x + 10, newY, message, { fontSize: '14px', color: '#FFFFFF' });
+        newMessage.setWordWrapWidth(this.width - 20);
+
+        this.messages.push(newMessage);
+
+        // Update positions of all messages to accommodate the new message
+        this.updateMessagesPosition();
+    }
+
+    // Method to update the position of all messages to keep them within the panel
+    private updateMessagesPosition() {
+        this.messages.forEach((msg, index) => {
+            const newY = this.y + 8 + (index * 22); // Recalculate Y position based on index
+            msg.setY(newY);
+        });
+    }
+}
+
+
+/*import Phaser from "phaser";
+
+export class MessagePanel {
+    private scene: Phaser.Scene;
+    private panel: Phaser.GameObjects.Graphics;
+    private messages: Phaser.GameObjects.Text[] = [];
     private mask: Phaser.GameObjects.Graphics;
     private startY: number;
     private scrollOffset: number = 0;
@@ -42,7 +97,7 @@ export class MessagePanel {
             this.updateMessagePositions();
         }
     }*/
-
+/*
     scrollMessages(velocityY: number) {
         this.scrollOffset += velocityY * 0.1; // Adjust scroll speed
         this.scrollOffset = Phaser.Math.Clamp(this.scrollOffset, -(this.messages.length * 20), 0); // Adjust clamping based on your content
@@ -58,6 +113,6 @@ export class MessagePanel {
     }
 
     // Show and hide methods remain the same
-    public show() { /* ... */ }
-    public hide() { /* ... */ }
-}
+    public show() {}
+    public hide() {}
+}*/

@@ -21,11 +21,11 @@ EosRPG is a Phaser 3 TypeScript web app game that is linked directly to our webs
 
 
 ## TODO
-- Finish audio sliders with draggable adjustment for both music and sound effects
+- Finish audio sliders with draggable adjustment for both music and sound effects.
 - Design and implement tile set.
-- Character sprites for the following characters: player (man), player (woman), HR officer, CEO, engineer
-- Consider adding character selection menu
-- Fix speech bubble bug
+- Character sprites for the following characters: player (man), player (woman), HR officer, CEO, engineer, marketing
+- Consider adding character selection menu, M/F, hair color, etc.
+- Fix speech bubble jumping bug
 - Implement text notification and speech UI
 - Add UI class that overlays each scene in game. The UI should include: inventory (bottom), text chat/notification system (bottom left), and character information (top right).
 - Backend needs to be updated from NodeJS to Django.

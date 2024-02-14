@@ -14,6 +14,10 @@ export class CEOScene extends Phaser.Scene {
 
   // keyboard
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys; // move up, left, down, right
+  private one!: Phaser.Input.Keyboard.Key; // input 1
+  private two!: Phaser.Input.Keyboard.Key; // input 2
+  private three!: Phaser.Input.Keyboard.Key; // input 3
+  private four!: Phaser.Input.Keyboard.Key; // input 4
   private w!: Phaser.Input.Keyboard.Key; // move up
   private a!: Phaser.Input.Keyboard.Key; // move left
   private s!: Phaser.Input.Keyboard.Key; // move down
@@ -26,6 +30,8 @@ export class CEOScene extends Phaser.Scene {
   private player!: Phaser.Physics.Arcade.Sprite;
   private speechBubble!: ReturnType<typeof SpeechBubble.createSpeechBubble>;
   private messageBox!: MessagePanel;
+
+  private messages = [""];
 
   constructor() {
     super({ key: CST.SCENE.CEO });
@@ -49,10 +55,12 @@ export class CEOScene extends Phaser.Scene {
     this.a = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.s = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     this.d = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    this.one = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
+    this.two = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+    this.three = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
+    this.four = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
 
     // character (temp, need to preload images once character sprite sheet is ready)
-    
-    //this.messageBox = new MessagePanel(this, 0, 400, 200, 300, "大家好，我是");
 
     // scene boundaries
     //this.physics.world.setBounds(50, 80, this.game.renderer.width-80, this.game.renderer.width-115);
@@ -82,6 +90,7 @@ export class CEOScene extends Phaser.Scene {
       let graphics = this.add.graphics();
       graphics.fillStyle(0x000000, 1); // The '1' is the alpha for full opacity
       graphics.fillRect(0, 512, 512, 100); // Fill a rectangle from (0, 512) to (512, 612)
+      this.messageBox = new MessagePanel(this, 0, 518, 200, 300, "大家好，這是遠傳夢想號");
     }
   // this was for updating the background
   /*update(time: number, delta: number): void {
@@ -122,6 +131,30 @@ export class CEOScene extends Phaser.Scene {
   handleKeyboard() {
     
     let speed = this.shift.isDown ? 250 : 150;
+
+    // input 1
+    if(Phaser.Input.Keyboard.JustDown(this.one)) {
+      console.log("one pressed");
+      this.messageBox.addMessage("你按了 1");
+    }
+
+    // input 2
+    if(Phaser.Input.Keyboard.JustDown(this.two)) {
+      console.log("two pressed");
+      this.messageBox.addMessage("你按了 2");
+    }
+
+    // input 3
+    if(Phaser.Input.Keyboard.JustDown(this.three)) {
+      console.log("three pressed");
+      this.messageBox.addMessage("你按了 3");
+    }
+
+    //input 4
+    if(Phaser.Input.Keyboard.JustDown(this.four)) {
+      console.log("four pressed");
+      this.messageBox.addMessage("你按了 4");
+    }
 
     // run
     if(this.shift.isDown) {

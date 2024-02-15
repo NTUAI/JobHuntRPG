@@ -8,7 +8,7 @@ export class MessagePanel {
     private y: number;
     private width: number;
     private height: number;
-    private maxMessages: number = 4;
+    private maxMessages: number = 7;
 
     constructor(scene: Phaser.Scene, x, y, width, height, message: string) {
         this.scene = scene;

@@ -45,7 +45,7 @@ export class MainMenuScene extends Phaser.Scene {
         this.add.image(0, 0, CST.IMAGE.TITLE).setOrigin(0).setDepth(0).setScale(0.55);
 
         graphics.fillStyle(0x000000, 1); // The '1' is the alpha for full opacity
-        graphics.fillRect(0, 512, 512, 100); // Fill a rectangle from (0, 512) to (512, 612)
+        graphics.fillRect(0, 512, 512, 200); // Fill a rectangle from (0, 512) to (512, 612)
 
 
         let playButton = this.add.image(470, 50, CST.IMAGE.PLAY).setDepth(1).setScale(0.4);

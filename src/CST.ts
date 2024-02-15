@@ -18,6 +18,7 @@ export const CST = {
         CEO_ROOM: "ceo.png",
         HR_ROOM: "HR_room.jpg",
         BOARD: "board.png",
+        XP: "xp.png",
 
         FET_LOGO: "FET_logo.png",
         NTUAI_LOGO: "NTUAI_logo.png",

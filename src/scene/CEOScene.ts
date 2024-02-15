@@ -60,6 +60,8 @@ export class CEOScene extends Phaser.Scene {
     this.three = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
     this.four = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
 
+    this.game.canvas.style.cursor = `url('assets/images/cursor1.png'), default`;
+
     // character (temp, need to preload images once character sprite sheet is ready)
 
     // scene boundaries

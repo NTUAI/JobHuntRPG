@@ -3,11 +3,8 @@ import { CST } from "../CST";
 import { FadeUtils } from '../FadeUtils';
 import { SpeechBubble } from '../SpeechBubble';
 import { MessagePanel } from '../MessagePanel';
-import { Controls } from '../Controls'; // Make sure the path is correct
 
 export class CEOScene extends Phaser.Scene {
-  private changingScene: boolean = false;
-
   // environment images
   private bg!: Phaser.GameObjects.TileSprite;
   
@@ -16,9 +13,8 @@ export class CEOScene extends Phaser.Scene {
   private ship!: Phaser.Sound.BaseSound;
 
   // keyboard
-  private controls!: Controls;
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys; // move up, left, down, right
-  /*private one!: Phaser.Input.Keyboard.Key; // input 1
+  private one!: Phaser.Input.Keyboard.Key; // input 1
   private two!: Phaser.Input.Keyboard.Key; // input 2
   private three!: Phaser.Input.Keyboard.Key; // input 3
   private four!: Phaser.Input.Keyboard.Key; // input 4
@@ -28,7 +24,7 @@ export class CEOScene extends Phaser.Scene {
   private d!: Phaser.Input.Keyboard.Key; // move right
   private spacebar!: Phaser.Input.Keyboard.Key; // chat / interact
   private shift!: Phaser.Input.Keyboard.Key; // sprint
-  private esc!: Phaser.Input.Keyboard.Key; // return to main menu*/
+  private esc!: Phaser.Input.Keyboard.Key; // return to main menu
   
   // character
   private player!: Phaser.Physics.Arcade.Sprite;
@@ -42,28 +38,39 @@ export class CEOScene extends Phaser.Scene {
 
   constructor() {
     super({ key: CST.SCENE.CEO });
-    this.xp = 0;
-    this.level = 1;
+    /*this.xp = 0;
+    this.level = 0;
+    this.player = this.physics.add.sprite(250, 450, CST.IMAGE.PLAYER).setScale(0.2)*/
   }
 
   preload(): void {} // this method isn't needed since the loading scene handles it
 
   create(): void {
-    this.controls = new Controls(this);
     FadeUtils.fadeIn(this, 2000, (callback) => {
         console.log("CEO Scene activated")
     });
 
     this.bg = this.add.tileSprite(256, 256, this.game.renderer.width, 512, CST.IMAGE.CEO_ROOM)
-    this.player = this.physics.add.sprite(250, 450, CST.IMAGE.PLAYER).setScale(0.2)
+
+    this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.shift = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+    this.esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.w = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.a = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.s = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.d = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    this.one = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
+    this.two = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+    this.three = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
+    this.four = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
 
     this.game.canvas.style.cursor = `url('assets/images/cursor1.png'), default`;
 
     // character (temp, need to preload images once character sprite sheet is ready)
 
     // scene boundaries
-    this.physics.world.setBounds(0, 0, 512, 512);
-    this.player.setCollideWorldBounds(true);
+    //this.physics.world.setBounds(50, 80, this.game.renderer.width-80, this.game.renderer.width-115);
+    //this.player.setCollideWorldBounds(true);
     
     // ship sound effects
     this.ship = this.sound.add(CST.AUDIO.GAME_AUDIO, { loop: true });
@@ -92,9 +99,8 @@ export class CEOScene extends Phaser.Scene {
       this.messageBox = new MessagePanel(this, 200, 518, 200, 300, "大家好，這是遠傳夢想號");
 
 
-      this.xpBar = this.add.image(0, 512, CST.IMAGE.XP).setOrigin(0).setDepth(0).setScale(0.22);
-      this.add.text(0, 570, "XP: " + this.xp, { fontSize: '20px', color: '#FFFFFF' });
-      this.add.text(0, 590, "Level: " + this.level), { fontSize: '20px', color: '#FFFFFF' };
+      //this.xpBar = this.add.image(0, 512, CST.IMAGE.XP).setOrigin(0).setDepth(0).setScale(0.22);
+      //this.add.text(0, 540, "XP: " + this.xp, { fontSize: '14px', color: '#FFFFFF' });
     }
   // this was for updating the background
   /*update(time: number, delta: number): void {
@@ -125,43 +131,43 @@ export class CEOScene extends Phaser.Scene {
     this.handleKeyboard()
     this.updateSpeechBubblePosition();
 
-    if(this.player.y >= 460 && !this.changingScene) {
-      //this.player.y = 0;
+    if(this.player.y >= this.renderer.height) {
+      this.player.y = 0;
       this.player.setInteractive(false);
-      this.changingScene = true;
       this.toHR();
     }
   }
 
   handleKeyboard() {
-    let speed = this.controls.isDown('shift') ? 250 : 150;
+    
+    let speed = this.shift.isDown ? 250 : 150;
 
     // input 1
-    if(this.controls.justDown('one')) {
+    if(Phaser.Input.Keyboard.JustDown(this.one)) {
       console.log("one pressed");
       this.messageBox.addMessage("你按了 1");
     }
 
     // input 2
-    if(this.controls.justDown('two')) {
+    if(Phaser.Input.Keyboard.JustDown(this.two)) {
       console.log("two pressed");
       this.messageBox.addMessage("你按了 2");
     }
 
     // input 3
-    if(this.controls.justDown('three')) {
+    if(Phaser.Input.Keyboard.JustDown(this.three)) {
       console.log("three pressed");
       this.messageBox.addMessage("你按了 3");
     }
 
     //input 4
-    if(this.controls.justDown('four')) {
+    if(Phaser.Input.Keyboard.JustDown(this.four)) {
       console.log("four pressed");
       this.messageBox.addMessage("你按了 4");
     }
 
     // run
-    if(this.controls.isDown('shift')) {
+    if(this.shift.isDown) {
       speed = 250;
     }
 
@@ -169,27 +175,27 @@ export class CEOScene extends Phaser.Scene {
     
 
     // go up
-    if(this.controls.isDown('up') || this.controls.isDown('w')) {
+    if(this.cursors.up.isDown || this.w.isDown) {
       this.player.setVelocity(0, -speed);
     }
     
     // go down
-    if(this.controls.isDown('down') || this.controls.isDown('s')) {
+    if(this.cursors.down.isDown || this.s.isDown) {
       this.player.setVelocity(0, speed);
     }
 
     //go left
     this.player.setVelocityX(0)
-    if(this.controls.isDown('left') || this.controls.isDown('a')) {
+    if(this.cursors.left.isDown || this.a.isDown) {
       this.player.setVelocity(-speed, 0);
     }
     // go right
-    if(this.controls.isDown('right') || this.controls.isDown('d')) {
+    if(this.cursors.right.isDown || this.d.isDown) {
       this.player.setVelocity(speed, 0);
     }
 
     // speech and interaction (chat bubble currently)
-    if(this.controls.justDown('space')) {
+    if(Phaser.Input.Keyboard.JustDown(this.spacebar)) {
       if (this.speechBubble) {
         this.speechBubble.destroy(); // or .setVisible(false) based on your implementation
       }
@@ -208,7 +214,7 @@ export class CEOScene extends Phaser.Scene {
       );    };
 
     // ESC input
-    if(this.controls.isDown('esc')) {
+    if(this.esc.isDown) {
         this.sound.stopAll();
         this.scene.start(CST.SCENE.MENU);
     }

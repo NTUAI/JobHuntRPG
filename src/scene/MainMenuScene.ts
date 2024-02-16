@@ -42,30 +42,56 @@ export class MainMenuScene extends Phaser.Scene {
 
         //create images (z order)
         //this.add.image(this.game.renderer.width / 2, this.game.renderer.height * 0.20, CST.IMAGE.LOGO).setDepth(1);
-        this.add.image(0, 0, CST.IMAGE.TITLE).setOrigin(0).setDepth(0).setScale(0.55);
+        this.add.image(0, 0, CST.IMAGE.TITLE).setOrigin(0).setDepth(0).setScale(0.60); // 600 x 600
 
         graphics.fillStyle(0x000000, 1); // The '1' is the alpha for full opacity
         graphics.fillRect(0, 512, 512, 200); // Fill a rectangle from (0, 512) to (512, 612)
 
 
-        let playButton = this.add.image(470, 50, CST.IMAGE.PLAY).setDepth(1).setScale(0.4);
-        let optionsButton = this.add.image(470, 150, CST.IMAGE.OPTIONS).setDepth(1).setScale(0.4);
-        let quitButton = this.add.image(470, 250, CST.IMAGE.QUIT).setDepth(1).setScale(0.4);
-        let hoverImg = this.add.image(100, 100, CST.IMAGE.HOVER).setScale(0.15).setVisible(false);
+        let playButton = this.add.image(700, 50, CST.IMAGE.PLAY).setDepth(1).setScale(0.55);
+        let optionsButton = this.add.image(700, 150, CST.IMAGE.OPTIONS).setDepth(1).setScale(0.55);
+        let quitButton = this.add.image(700, 250, CST.IMAGE.QUIT).setDepth(1).setScale(0.55);
+        let hoverImg = this.add.image(100, 100, CST.IMAGE.HOVER).setScale(0.20).setVisible(false);
 
         //let board = this.add.image(180, 562, CST.IMAGE.BOARD).setDepth(1).setScale(0.8);
-        let EosRPG = this.add.image(256, 500, CST.IMAGE.EOSRPG_LOGO).setDepth(1).setScale(0.4);
-        let NTUAI_Button = this.add.image(90, 550, CST.IMAGE.NTUAI_LOGO).setDepth(1).setScale(0.25);
+        let EosRPG = this.add.image(80, 85, CST.IMAGE.EOSRPG_LOGO).setDepth(1).setScale(0.4);
+        let NTUAI_Button = this.add.image(100, 550, CST.IMAGE.NTUAI_LOGO).setDepth(1).setScale(0.25);
         //let FET_Button = this.add.image(300, 550, CST.IMAGE.FET_LOGO).setDepth(1).setScale(0.1);
-        let ATCC_Button = this.add.image(422, 550, CST.IMAGE.ATCC_LOGO).setDepth(1).setScale(0.25);
+        let ATCC_Button = this.add.image(300, 550, CST.IMAGE.ATCC_LOGO).setDepth(1).setScale(0.25);
+        let FET_Button = this.add.image(500, 550, CST.IMAGE.FET_LOGO).setDepth(1).setScale(0.16);
 
         this.tweens.add({
-            targets: EosRPG,
+            targets: NTUAI_Button,
+            y: '-=10', // Moves up by 20 pixels
+            ease: 'Sine.inOut', // Smooth transition for a natural floating effect
+            duration: 2000, // Duration of one rise/fall cycle
+            yoyo: true, // Automatically reverses the tween to create a up and down motion
+            repeat: -1 // Infinite loop
+        });
+
+        this.tweens.add({
+            targets: ATCC_Button,
+            y: '-=15', // Moves up by 20 pixels
+            ease: 'Sine.inOut', // Smooth transition for a natural floating effect
+            duration: 2000, // Duration of one rise/fall cycle
+            yoyo: true, // Automatically reverses the tween to create a up and down motion
+            repeat: -1 // Infinite loop
+        });
+
+        this.tweens.add({
+            targets: FET_Button,
             y: '-=20', // Moves up by 20 pixels
             ease: 'Sine.inOut', // Smooth transition for a natural floating effect
             duration: 2000, // Duration of one rise/fall cycle
             yoyo: true, // Automatically reverses the tween to create a up and down motion
             repeat: -1 // Infinite loop
+        });
+
+        this.tweens.add({
+            targets: hoverImg, //your image that must spin
+            rotation: 6.2831, //rotation value must be radian
+            duration: 4000, //duration is in milliseconds
+            repeat: -1
         });
     
 
@@ -87,7 +113,7 @@ export class MainMenuScene extends Phaser.Scene {
         playButton.on("pointerover", () => {
             playButton.setX(playButton.x-10);
             hoverImg.setVisible(true);
-            hoverImg.setX(playButton.x-80);
+            hoverImg.setX(playButton.x-140);
             hoverImg.setY(playButton.y);
             this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
         })
@@ -105,13 +131,18 @@ export class MainMenuScene extends Phaser.Scene {
             this.toCEO();
         });
 
+        this.add.graphics().fillStyle(0x000000, 0.2).fillCircle(80, 87, 83);
+        this.add.graphics().lineStyle(5, 0x5C4033, 1).strokeRect(600, 0, 200, 600);
+        this.add.graphics().lineStyle(5, 0x5C4033, 1).strokeRect(0, 0, 600, 600);
+        this.add.graphics().lineStyle(5, 0x5C4033, 1).strokeRect(0, 600, 600, 200);
+
         // options button
         optionsButton.setInteractive();
 
         optionsButton.on("pointerover", () => {
             optionsButton.setX(optionsButton.x-10);
             hoverImg.setVisible(true);
-            hoverImg.setX(optionsButton.x-80);
+            hoverImg.setX(optionsButton.x-140);
             hoverImg.setY(optionsButton.y);
             this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
         })
@@ -127,9 +158,9 @@ export class MainMenuScene extends Phaser.Scene {
             quitButton.setVisible(false);
             hoverImg.setVisible(false);     
             
-            // Show volume controls
+        // Show volume controls
 
-                    let track, knob;
+        let track, knob;
 
         // Create the slider track
         track = this.add.graphics()
@@ -175,7 +206,7 @@ export class MainMenuScene extends Phaser.Scene {
         quitButton.on("pointerover", () => {
             quitButton.setX(quitButton.x-10);
             hoverImg.setVisible(true);
-            hoverImg.setX(quitButton.x-80);
+            hoverImg.setX(quitButton.x-140);
             hoverImg.setY(quitButton.y);
             this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
         })
@@ -222,6 +253,23 @@ export class MainMenuScene extends Phaser.Scene {
             window.open("https://atcc.co/21statcc/", "_blank");
         })
 
+
+
+         // FET button
+         FET_Button.setInteractive();
+
+         FET_Button.on("pointerover", () => {
+             FET_Button.setScale(0.19);
+             this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
+         })
+ 
+         FET_Button.on("pointerout", () => {
+             FET_Button.setScale(0.16);
+         })
+ 
+         FET_Button.on("pointerup", () => {
+             window.open("https://www.fetnet.net/", "_blank");
+         })
 
     }
 }

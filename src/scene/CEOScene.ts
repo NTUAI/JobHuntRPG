@@ -18,17 +18,6 @@ export class CEOScene extends Phaser.Scene {
   // keyboard
   private controls!: Controls;
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys; // move up, left, down, right
-  /*private one!: Phaser.Input.Keyboard.Key; // input 1
-  private two!: Phaser.Input.Keyboard.Key; // input 2
-  private three!: Phaser.Input.Keyboard.Key; // input 3
-  private four!: Phaser.Input.Keyboard.Key; // input 4
-  private w!: Phaser.Input.Keyboard.Key; // move up
-  private a!: Phaser.Input.Keyboard.Key; // move left
-  private s!: Phaser.Input.Keyboard.Key; // move down
-  private d!: Phaser.Input.Keyboard.Key; // move right
-  private spacebar!: Phaser.Input.Keyboard.Key; // chat / interact
-  private shift!: Phaser.Input.Keyboard.Key; // sprint
-  private esc!: Phaser.Input.Keyboard.Key; // return to main menu*/
   
   // character
   private player!: Phaser.Physics.Arcade.Sprite;
@@ -114,10 +103,11 @@ export class CEOScene extends Phaser.Scene {
   updateSpeechBubblePosition(): void {
     if (this.speechBubble) {
       // Adjust these offsets to position the speech bubble correctly relative to your player sprite
-      const offsetX = -200; // This is just an example, adjust as needed
-      const offsetY = -340; // This is just an example, adjust as needed
-      
-      this.speechBubble.setPosition(this.player.x + offsetX, this.player.y + offsetY);
+      //const offsetX = -200; // This is just an example, adjust as needed
+      //const offsetY = -340; // This is just an example, adjust as needed
+      console.log("x: " + this.player.x + ", y: " + this.player.y);
+
+      this.speechBubble.setPosition(this.player.x /* + offsetX*/, this.player.y /*+ offsetY*/);
     }
   }
 

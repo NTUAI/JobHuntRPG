@@ -20,7 +20,7 @@ export const CST = {
         BOARD: "board.png",
         XP: "xp.png",
 
-        FET_LOGO: "FET_logo.png",
+        FET_LOGO: "FET_Logo.png",
         NTUAI_LOGO: "NTUAI_logo.png",
         EOSRPG_LOGO: "EosRPG_logo.png",
         ATCC_LOGO: "ATCC_logo.png",

@@ -6,34 +6,42 @@
     <style>
       html,
       body {
-        margin: 0px;
+        margin: 0;
         height: 100vh;
         width: 100vw;
         overflow: hidden;
-        background: #000000;
+        background: #000; /* Black background */
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start; /* Ensure content is aligned to the top */
+        justify-content: flex-start;
       }
       .container {
-        width: 100%; /* Adjust container width as needed */
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
       }
       h1 {
-        color: #000000; /* Gray color */
-        margin: 0; /* Remove default margin to align it at the top */
-        padding: 10px 0; /* Add some padding at the top if needed */
-        width: 100%; /* Ensure it spans the width of the container */
-        text-align: center; /* Center the text */
+        color: #fff; /* White color for visibility */
+        margin: 0;
+        padding-top: 10px; /* Padding at the top */
+        width: 100%;
+        text-align: center;
+      }
+      .version-text {
+        color: #fff; /* White color for visibility */
+        font-size: 1em; /* Adjust size as needed */
+        margin-top: 5px; /* Space between the title and version text */
       }
     </style>
 </head>
 <body>
     <div class="container" id="game-container">
-      <h1>EosRPG</h1>
+      <!-- Game title -->
+      <h1>FET RPG</h1>
+      <!-- Version text -->
+      <p class="version-text">Alpha v. 1.0</p>
       <!-- Your game's canvas or additional content goes here -->
     </div>
     <script type="module" src="/src/main.ts"></script>

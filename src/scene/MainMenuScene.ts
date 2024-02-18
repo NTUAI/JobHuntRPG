@@ -54,11 +54,11 @@ export class MainMenuScene extends Phaser.Scene {
         let hoverImg = this.add.image(100, 100, CST.IMAGE.HOVER).setScale(0.20).setVisible(false);
 
         //let board = this.add.image(180, 562, CST.IMAGE.BOARD).setDepth(1).setScale(0.8);
-        let EosRPG = this.add.image(80, 85, CST.IMAGE.EOSRPG_LOGO).setDepth(1).setScale(0.4);
+        let FETRPG = this.add.image(80, 85, CST.IMAGE.FETRPG_LOGO).setDepth(1).setScale(0.3);
         let NTUAI_Button = this.add.image(100, 550, CST.IMAGE.NTUAI_LOGO).setDepth(1).setScale(0.25);
         //let FET_Button = this.add.image(300, 550, CST.IMAGE.FET_LOGO).setDepth(1).setScale(0.1);
-        let ATCC_Button = this.add.image(300, 550, CST.IMAGE.ATCC_LOGO).setDepth(1).setScale(0.25);
-        let FET_Button = this.add.image(500, 550, CST.IMAGE.FET_LOGO).setDepth(1).setScale(0.16);
+        let ATCC_Button = this.add.image(500, 550, CST.IMAGE.ATCC_LOGO).setDepth(1).setScale(0.25);
+        let FET_Button = this.add.image(300, 550, CST.IMAGE.FET_LOGO).setDepth(1).setScale(0.16);
 
         this.tweens.add({
             targets: NTUAI_Button,

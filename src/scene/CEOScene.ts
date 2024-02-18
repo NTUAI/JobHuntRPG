@@ -9,7 +9,7 @@ export class CEOScene extends Phaser.Scene {
   private changingScene: boolean = false;
 
   // environment images
-  private bg!: Phaser.GameObjects.TileSprite;
+  private bg!: Phaser.GameObjects.Image;
   
   // audio
   private music!: Phaser.Sound.BaseSound;
@@ -27,6 +27,7 @@ export class CEOScene extends Phaser.Scene {
   // xp and leveling
   private xp!: number;
   private xpBar!: Phaser.GameObjects.Image;
+  private compass!: Phaser.GameObjects.Image;
   private level!: number;
 
   constructor() {
@@ -43,7 +44,8 @@ export class CEOScene extends Phaser.Scene {
         console.log("CEO Scene activated")
     });
 
-    this.bg = this.add.tileSprite(256, 256, this.game.renderer.width, 512, CST.IMAGE.CEO_ROOM)
+    //this.bg = this.add.tileSprite(256, 256, this.game.renderer.width, this.game.renderer.height, CST.IMAGE.CEO_ROOM)
+    this.bg = this.add.image(0, 0, CST.IMAGE.CEO_ROOM).setOrigin(0).setDepth(0).setScale(1.2);
     this.player = this.physics.add.sprite(250, 450, CST.IMAGE.PLAYER).setScale(0.2)
 
     this.game.canvas.style.cursor = `url('assets/images/cursor1.png'), default`;
@@ -51,7 +53,7 @@ export class CEOScene extends Phaser.Scene {
     // character (temp, need to preload images once character sprite sheet is ready)
 
     // scene boundaries
-    this.physics.world.setBounds(0, 0, 512, 512);
+    this.physics.world.setBounds(0, 0, 600, 600);
     this.player.setCollideWorldBounds(true);
     
     // ship sound effects
@@ -77,13 +79,14 @@ export class CEOScene extends Phaser.Scene {
 
       let graphics = this.add.graphics();
       graphics.fillStyle(0x000000, 1); // The '1' is the alpha for full opacity
-      graphics.fillRect(0, 512, 512, 100); // Fill a rectangle from (0, 512) to (512, 612)
-      this.messageBox = new MessagePanel(this, 200, 518, 200, 300, "大家好，這是遠傳夢想號");
+      //graphics.fillRect(0, 512, 512, 100); // Fill a rectangle from (0, 512) to (512, 612)
+      this.messageBox = new MessagePanel(this, 620, 0, 200, 600, "大家好，這是遠傳夢想號");
 
 
       this.xpBar = this.add.image(0, 512, CST.IMAGE.XP).setOrigin(0).setDepth(0).setScale(0.22);
       this.add.text(0, 570, "XP: " + this.xp, { fontSize: '20px', color: '#FFFFFF' });
       this.add.text(0, 590, "Level: " + this.level), { fontSize: '20px', color: '#FFFFFF' };
+      this.compass = this.add.image(550, 550, CST.IMAGE.COMPASS).setDepth(0).setScale(0.2);
     }
   // this was for updating the background
   /*update(time: number, delta: number): void {
@@ -115,7 +118,7 @@ export class CEOScene extends Phaser.Scene {
     this.handleKeyboard()
     this.updateSpeechBubblePosition();
 
-    if(this.player.y >= 460 && !this.changingScene) {
+    if(this.player.y >= 550 && !this.changingScene) {
       //this.player.y = 0;
       this.player.setInteractive(false);
       this.changingScene = true;

@@ -19,10 +19,11 @@ export const CST = {
         HR_ROOM: "HR_room.jpg",
         BOARD: "board.png",
         XP: "xp.png",
+        COMPASS: "compass.png",
 
         FET_LOGO: "FET_Logo.png",
         NTUAI_LOGO: "NTUAI_logo.png",
-        EOSRPG_LOGO: "EosRPG_logo.png",
+        FETRPG_LOGO: "FETRPG_logo.png",
         ATCC_LOGO: "ATCC_logo.png",
 
         CURSOR_1: "cursor2.png"

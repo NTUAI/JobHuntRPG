@@ -15,6 +15,7 @@ export class GameScene extends Phaser.Scene {
   private ceo_room!: Phaser.GameObjects.Image;
   private hr_room!: Phaser.GameObjects.Image;
   private engineer_room!: Phaser.GameObjects.Image;
+  private marketing_room!: Phaser.GameObjects.Image;
   
   // audio
   private music!: Phaser.Sound.BaseSound;
@@ -60,12 +61,15 @@ export class GameScene extends Phaser.Scene {
     this.ceo_room = this.add.image(0, 0, CST.IMAGE.CEO_ROOM).setOrigin(0).setDepth(0);
     this.hr_room = this.add.image(0, 0, CST.IMAGE.HR_ROOM).setOrigin(0).setDepth(0);
     this.engineer_room = this.add.image(0, 0, CST.IMAGE.ENGINEER_ROOM).setOrigin(0).setDepth(0);
+    this.marketing_room = this.add.image(0, 0, CST.IMAGE.MARKETING_ROOM).setOrigin(0).setDepth(0);
 
     this.player_sprite = this.physics.add.sprite(250, 450, CST.IMAGE.PLAYER_SPRITE).setScale(0.25);
     this.ceo_sprite = this.physics.add.sprite(180, 300, CST.IMAGE.CEO_SPRITE).setScale(0.35);
     this.hr_sprite = this.physics.add.sprite(100, 200, CST.IMAGE.HR_SPRITE).setScale(0.25);
     this.marketing_sprite = this.physics.add.sprite(100, 500, CST.IMAGE.MARKETING_SPRITE).setScale(0.30);
     this.engineer_sprite = this.physics.add.sprite(500, 200, CST.IMAGE.ENGINEER_SPRITE).setScale(0.30);
+
+    this.setRoom(this.activeRoom);
 
     this.game.canvas.style.cursor = `url('assets/images/cursor1.png'), default`;
 
@@ -120,6 +124,59 @@ export class GameScene extends Phaser.Scene {
         //this.scene.stop(CST.SCENE.GAME);
         this.sound.stopAll();
     });
+  }
+
+  setRoom(newRoom: string): void {
+    this.activeRoom = newRoom;
+    switch(this.activeRoom) {
+      case "CEO": 
+        this.ceo_room.setVisible(true);
+        this.hr_room.setVisible(false);
+        this.engineer_room.setVisible(false);
+        this.marketing_room.setVisible(false);
+    
+        this.ceo_sprite.setVisible(true);
+        this.hr_sprite.setVisible(false);
+        this.engineer_sprite.setVisible(false);
+        this.marketing_sprite.setVisible(false);
+        break;
+      
+      case "HR":
+        this.ceo_room.setVisible(false);
+        this.hr_room.setVisible(true);
+        this.engineer_room.setVisible(false);
+        this.marketing_room.setVisible(false);
+    
+        this.ceo_sprite.setVisible(false);
+        this.hr_sprite.setVisible(true);
+        this.engineer_sprite.setVisible(false);
+        this.marketing_sprite.setVisible(false);
+        break;
+
+      case "Marketing":
+        this.ceo_room.setVisible(false);
+        this.hr_room.setVisible(false);
+        this.engineer_room.setVisible(false);
+        this.marketing_room.setVisible(true);
+    
+        this.ceo_sprite.setVisible(false);
+        this.hr_sprite.setVisible(false);
+        this.engineer_sprite.setVisible(false);
+        this.marketing_sprite.setVisible(true);
+        break;
+
+      case "Engineering":
+        this.ceo_room.setVisible(false);
+        this.hr_room.setVisible(false);
+        this.engineer_room.setVisible(true);
+        this.marketing_room.setVisible(false);
+    
+        this.ceo_sprite.setVisible(true);
+        this.hr_sprite.setVisible(false);
+        this.engineer_sprite.setVisible(true);
+        this.marketing_sprite.setVisible(false);
+        break;
+    }
   }
 
   updateSpeechBubblePosition(): void {

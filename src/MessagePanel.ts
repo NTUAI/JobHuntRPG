@@ -52,7 +52,7 @@ export class MessagePanel {
 
         // Calculate the Y position of the new message
         // This places the new message at the bottom of the list
-        const newY = this.y + 10 + (this.messages.length * 22); // Assuming a fixed line height for simplicity
+        const newY = this.y + 20 + (this.messages.length * 22); // Assuming a fixed line height for simplicity
         let newMessage = this.scene.add.text(this.x + 10, newY, this.wrapChineseText(message), { fontSize: '14px', color: '#FFFFFF' });
 
         this.messages.push(newMessage);
@@ -64,7 +64,7 @@ export class MessagePanel {
     // Method to update the position of all messages to keep them within the panel
     private updateMessagesPosition() {
         this.messages.forEach((msg, index) => {
-            const newY = this.y + 8 + (index * 22); // Recalculate Y position based on index
+            const newY = this.y + 16 + (index * 22); // Recalculate Y position based on index
             msg.setY(newY);
         });
     }

@@ -5,11 +5,16 @@ import { SpeechBubble } from '../SpeechBubble';
 import { MessagePanel } from '../MessagePanel';
 import { Controls } from '../Controls'; // Make sure the path is correct
 
-export class CEOScene extends Phaser.Scene {
+export class GameScene extends Phaser.Scene {
+  
+  private activeRoom!: string;
+  
   private changingScene: boolean = false;
 
   // environment images
-  private bg!: Phaser.GameObjects.Image;
+  private ceo_room!: Phaser.GameObjects.Image;
+  private hr_room!: Phaser.GameObjects.Image;
+  private engineer_room!: Phaser.GameObjects.Image;
   
   // audio
   private music!: Phaser.Sound.BaseSound;
@@ -19,8 +24,14 @@ export class CEOScene extends Phaser.Scene {
   private controls!: Controls;
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys; // move up, left, down, right
   
-  // character
-  private player!: Phaser.Physics.Arcade.Sprite;
+  // sprites
+  private player_sprite!: Phaser.Physics.Arcade.Sprite;
+  private ceo_sprite!: Phaser.Physics.Arcade.Sprite;
+  private hr_sprite!: Phaser.Physics.Arcade.Sprite;
+  private marketing_sprite!: Phaser.Physics.Arcade.Sprite;
+  private engineer_sprite!: Phaser.Physics.Arcade.Sprite;
+
+  // other player-bound assets
   private shadow!: Phaser.Physics.Arcade.Sprite;
   private speechBubble!: ReturnType<typeof SpeechBubble.createSpeechBubble>;
   private messageBox!: MessagePanel;
@@ -32,7 +43,8 @@ export class CEOScene extends Phaser.Scene {
   private level!: number;
 
   constructor() {
-    super({ key: CST.SCENE.CEO });
+    super({ key: CST.SCENE.GAME });
+    this.activeRoom = "CEO";
     this.xp = 0;
     this.level = 1;
   }
@@ -45,9 +57,15 @@ export class CEOScene extends Phaser.Scene {
         console.log("CEO Scene activated")
     });
 
-    //this.bg = this.add.tileSprite(256, 256, this.game.renderer.width, this.game.renderer.height, CST.IMAGE.CEO_ROOM)
-    this.bg = this.add.image(0, 0, CST.IMAGE.CEO_ROOM).setOrigin(0).setDepth(0);
-    this.player = this.physics.add.sprite(250, 450, CST.IMAGE.PLAYER).setScale(0.2);
+    this.ceo_room = this.add.image(0, 0, CST.IMAGE.CEO_ROOM).setOrigin(0).setDepth(0);
+    this.hr_room = this.add.image(0, 0, CST.IMAGE.HR_ROOM).setOrigin(0).setDepth(0);
+    this.engineer_room = this.add.image(0, 0, CST.IMAGE.ENGINEER_ROOM).setOrigin(0).setDepth(0);
+
+    this.player_sprite = this.physics.add.sprite(250, 450, CST.IMAGE.PLAYER_SPRITE).setScale(0.25);
+    this.ceo_sprite = this.physics.add.sprite(180, 300, CST.IMAGE.CEO_SPRITE).setScale(0.35);
+    this.hr_sprite = this.physics.add.sprite(100, 200, CST.IMAGE.HR_SPRITE).setScale(0.25);
+    this.marketing_sprite = this.physics.add.sprite(100, 500, CST.IMAGE.MARKETING_SPRITE).setScale(0.30);
+    this.engineer_sprite = this.physics.add.sprite(500, 200, CST.IMAGE.ENGINEER_SPRITE).setScale(0.30);
 
     this.game.canvas.style.cursor = `url('assets/images/cursor1.png'), default`;
 
@@ -55,7 +73,7 @@ export class CEOScene extends Phaser.Scene {
 
     // scene boundaries
     this.physics.world.setBounds(0, 0, 600, 600);
-    this.player.setCollideWorldBounds(true);
+    this.player_sprite.setCollideWorldBounds(true);
     
     // ship sound effects
     this.ship = this.sound.add(CST.AUDIO.GAME_AUDIO, { loop: true });
@@ -93,39 +111,36 @@ export class CEOScene extends Phaser.Scene {
       this.add.text(610, 520, "Level: " + this.level), { fontSize: '20px', color: '#FFFFFF' };
       this.compass = this.add.image(55, 550, CST.IMAGE.COMPASS).setDepth(0).setScale(0.2);
     }
-  // this was for updating the background
-  /*update(time: number, delta: number): void {
-    this.bg.tilePositionX;
-  } */
 
   toHR(): void {
     //this.sound.stopAll()
     FadeUtils.fadeOut(this, 2000, (callback) => {
         console.log("Switching from CEO sceen to HR scene")
-        this.scene.start(CST.SCENE.HR);
-        this.scene.stop(CST.SCENE.CEO);
+        //this.scene.start(CST.SCENE.HR);
+        //this.scene.stop(CST.SCENE.GAME);
         this.sound.stopAll();
     });
   }
 
   updateSpeechBubblePosition(): void {
+
     if (this.speechBubble) {
       // Adjust these offsets to position the speech bubble correctly relative to your player sprite
       //const offsetX = -200; // This is just an example, adjust as needed
       //const offsetY = -340; // This is just an example, adjust as needed
-      console.log("x: " + this.player.x + ", y: " + this.player.y);
+      console.log("x: " + this.player_sprite.x + ", y: " + this.player_sprite.y);
 
-      this.speechBubble.setPosition(this.player.x /* + offsetX*/, this.player.y /*+ offsetY*/);
+      //this.speechBubble.setPosition(this.player_sprite.x /* + offsetX*/, this.player_sprite.y /*+ offsetY*/);
     }
   }
 
   update() {    
     this.handleKeyboard()
-    this.updateSpeechBubblePosition();
+    //this.updateSpeechBubblePosition();
 
-    if(this.player.y >= 550 && !this.changingScene) {
+    if(this.player_sprite.y >= 550 && !this.changingScene) {
       //this.player.y = 0;
-      this.player.setInteractive(false);
+      this.player_sprite.setInteractive(false);
       this.changingScene = true;
       this.toHR();
     }
@@ -163,47 +178,48 @@ export class CEOScene extends Phaser.Scene {
       speed = 250;
     }
 
-    this.player.setVelocityY(0)
+    this.player_sprite.setVelocityY(0)
     
 
     // go up
     if(this.controls.isDown('up') || this.controls.isDown('w')) {
-      this.player.setVelocity(0, -speed);
+      this.player_sprite.setVelocity(0, -speed);
     }
     
     // go down
     if(this.controls.isDown('down') || this.controls.isDown('s')) {
-      this.player.setVelocity(0, speed);
+      this.player_sprite.setVelocity(0, speed);
     }
 
     //go left
-    this.player.setVelocityX(0)
+    this.player_sprite.setVelocityX(0)
     if(this.controls.isDown('left') || this.controls.isDown('a')) {
-      this.player.setVelocity(-speed, 0);
+      this.player_sprite.setVelocity(-speed, 0);
     }
     // go right
     if(this.controls.isDown('right') || this.controls.isDown('d')) {
-      this.player.setVelocity(speed, 0);
+      this.player_sprite.setVelocity(speed, 0);
     }
 
     // speech and interaction (chat bubble currently)
-    if(this.controls.justDown('space')) {
+    /*if(this.controls.justDown('space')) {
       if (this.speechBubble) {
         this.speechBubble.destroy(); // or .setVisible(false) based on your implementation
       }
   
       // Calculate the speech bubble's position based on the player's current position
       const bubbleOffsetX = 0; // Adjust as needed
-      const bubbleOffsetY = -this.player.displayHeight * this.player.scaleY; // Position above the player
+      const bubbleOffsetY = -this.player.displayHeight * this.player_sprite.scaleY; // Position above the player
       
       this.speechBubble = SpeechBubble.createSpeechBubble(
         this, 
-        this.player.x + bubbleOffsetX, 
-        this.player.y + bubbleOffsetY, 
+        this.player_sprite.x, 
+        this.player_sprite.y, 
         130, 
         50, 
         'This is a test speech bubble for FETRPG.'
-      );    };
+      );    
+    };*/
 
     // ESC input
     if(this.controls.isDown('esc')) {

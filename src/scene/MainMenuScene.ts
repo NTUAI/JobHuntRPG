@@ -19,7 +19,7 @@ export class MainMenuScene extends Phaser.Scene {
         // Start fading to black. The color is specified in hex (0xRRGGBB). 0x000000 is black.
         FadeUtils.fadeOut(this, 5000, (callback) => {
             console.log("Game starting")
-            this.scene.start(CST.SCENE.CEO);
+            this.scene.start(CST.SCENE.GAME);
         });
     }
 

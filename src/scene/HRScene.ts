@@ -117,7 +117,7 @@ export class HRScene extends Phaser.Scene {
             this.speechBubble.destroy(); // or .setVisible(false) based on your implementation
         }
     
-        this.speechBubble = SpeechBubble.createSpeechBubble(this, this.player.x - 50, this.player.y - 120, 130, 50, 'This is a test speech bubble for EosRPG.');
+        this.speechBubble = SpeechBubble.createSpeechBubble(this, this.player.x - 50, this.player.y - 120, 130, 50, 'This is a test speech bubble for FETRPG.');
     };
 
     // ESC input

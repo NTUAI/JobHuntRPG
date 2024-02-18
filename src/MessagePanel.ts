@@ -8,20 +8,39 @@ export class MessagePanel {
     private y: number;
     private width: number;
     private height: number;
-    private maxMessages: number = 7;
+    private maxMessages: number = 20;
 
-    constructor(scene: Phaser.Scene, x, y, width, height, message: string) {
+    constructor(scene: Phaser.Scene, message: string, sender: string) {
         this.scene = scene;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+        this.x = 600;
+        this.y = 0;
+        this.width = 200;
+        this.height = 600;
 
-        this.panel = this.scene.add.graphics({ fillStyle: { color: 0x000000, alpha: 0.5 } });
+        this.panel = this.scene.add.graphics({ fillStyle: { color: 0x000000, alpha: 0.5 } });  
+        message = sender + "：" + message;
         this.addMessage(message);
         //this.panel.fillRect(x, y, width, height); // can adjust size and position
         
         // make the panel scrollable and make it able to display multiple messages
+    }
+
+    wrapChineseText(text) {
+        let result = '';
+        let lineLength = 0;
+    
+        // Iterate through each character in the text
+        for (let char of text) {
+            lineLength += 1;
+            result += char;
+            // If we reach the max line length, insert a line break
+            if (lineLength >= 12) {
+                result += '\n'; // Add a newline character to break the line
+                lineLength = 0; // Reset the line length counter
+            }
+        }
+    
+        return result;
     }
 
     addMessage(message: string) {
@@ -34,8 +53,7 @@ export class MessagePanel {
         // Calculate the Y position of the new message
         // This places the new message at the bottom of the list
         const newY = this.y + 10 + (this.messages.length * 22); // Assuming a fixed line height for simplicity
-        const newMessage = this.scene.add.text(this.x + 10, newY, message, { fontSize: '14px', color: '#FFFFFF' });
-        newMessage.setWordWrapWidth(this.width - 20);
+        let newMessage = this.scene.add.text(this.x + 10, newY, this.wrapChineseText(message), { fontSize: '14px', color: '#FFFFFF' });
 
         this.messages.push(newMessage);
 

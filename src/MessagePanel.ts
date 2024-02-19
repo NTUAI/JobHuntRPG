@@ -1,5 +1,11 @@
 import Phaser from "phaser";
 
+// three colours for different types of messages
+// FETNET: #E72410
+// Player: #FFFFFF (the two colours of FETNET are white and red)
+// System: #964B00
+
+
 export class MessagePanel {
     private scene: Phaser.Scene;
     private panel: Phaser.GameObjects.Graphics;
@@ -10,7 +16,7 @@ export class MessagePanel {
     private height: number;
     private maxMessages: number = 20;
 
-    constructor(scene: Phaser.Scene, message: string, sender: string) {
+    constructor(scene: Phaser.Scene) {
         this.scene = scene;
         this.x = 600;
         this.y = 0;
@@ -18,14 +24,13 @@ export class MessagePanel {
         this.height = 600;
 
         this.panel = this.scene.add.graphics({ fillStyle: { color: 0x000000, alpha: 0.5 } });  
-        message = sender + "：" + message;
-        this.addMessage(message);
+        //this.addMessage(message);
         //this.panel.fillRect(x, y, width, height); // can adjust size and position
         
         // make the panel scrollable and make it able to display multiple messages
     }
 
-    wrapChineseText(text) {
+/*    wrapChineseText(text) {
         let result = '';
         let lineLength = 0;
     
@@ -42,18 +47,44 @@ export class MessagePanel {
     
         return result;
     }
+*/
 
-    addMessage(message: string) {
+    truncateString(str: string, maxLength: number = 12): string {
+    if (str.length > maxLength) {
+      return str.substring(0, maxLength) + '...';
+    }
+
+    return str;
+  }
+
+    addMessage(message: string, sender: string) {
         // If we already have the maximum number of messages, remove the first one
-        if (this.messages.length >= this.maxMessages) {
+        if(this.messages.length >= this.maxMessages) {
             const removedMessage = this.messages.shift();
             removedMessage?.destroy(); // Remove the oldest message from the display
         }
 
+        message = sender + "：" + message;
+
+        let colour = "#000000"; // default of black
+        if(sender == "玩家") {
+            colour = "#FFFFFF"; // player
+        }
+        else if(sender == "CEO" || sender == "人資" || sender == "工程師" || sender == "行銷") {
+            colour = "#E72410"; // CEO
+        }
+        else if(sender == "系統") {
+            colour = "#5C4033";
+        }
+        else {
+            console.log("Invalid sender");
+        }
+        
+
         // Calculate the Y position of the new message
         // This places the new message at the bottom of the list
         const newY = this.y + 20 + (this.messages.length * 22); // Assuming a fixed line height for simplicity
-        let newMessage = this.scene.add.text(this.x + 10, newY, this.wrapChineseText(message), { fontSize: '14px', color: '#FFFFFF' });
+        let newMessage = this.scene.add.text(this.x + 10, newY, this.truncateString(message), { fontSize: '14px', color: colour });
 
         this.messages.push(newMessage);
 

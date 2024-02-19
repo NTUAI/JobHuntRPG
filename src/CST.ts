@@ -47,5 +47,11 @@ export const CST = {
     },
     SPRITE: {
         CAT: "cat.png"
+    },
+    CHAT: {
+        CEO: "ceo.json",
+        MARKETING: "marketing.json",
+        HR: "hr.json",
+        ENGINEERING: "engineering.json"
     }
 }

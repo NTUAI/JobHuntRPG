@@ -24,6 +24,15 @@ export class LoadingScene extends Phaser.Scene {
         }
     }
 
+    loadChats() {
+        this.load.setPath("../assets/chats");
+        console.log(`Starting to load from directory: ${this.load.path}`);
+        for(let chat in CST.CHAT) {
+            console.log(`Starting to load: ${this.load.path}${CST.CHAT[chat]}`);
+            this.load.json(CST.CHAT[chat], CST.CHAT[chat]);
+        }
+    }
+
     /*loadSprites(frameConfig?: Phaser.Loader.FileTypes.ImageFrameConfig) {
         this.load.setPath("./assets/sprite");
 
@@ -47,11 +56,13 @@ export class LoadingScene extends Phaser.Scene {
         //load images, audio, spritesheets
         this.loadImages();
         this.loadAudio();
+        this.loadChats();
 
         /*this.loadSprites({
             frameHeight: 32,
             frameWidth: 32
         });*/
+        
 
         //create loading bar
         let loadingBar = this.add.graphics({
@@ -77,7 +88,7 @@ export class LoadingScene extends Phaser.Scene {
         //simulate large load
         for(let i = 0; i < 100; i++) {
             let uniqueKey = `placeholder_${i}`;
-            this.load.image(uniqueKey, 'room7_50.jpg');
+            this.load.image(uniqueKey, 'hr_room.jpg');
         }
 
         this.load.on("complete", () => {

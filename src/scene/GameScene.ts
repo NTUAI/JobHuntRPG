@@ -3,10 +3,13 @@ import { CST } from "../CST";
 import { FadeUtils } from '../FadeUtils';
 import { SpeechBubble } from '../SpeechBubble';
 import { MessagePanel } from '../MessagePanel';
-import { Controls } from '../Controls'; // Make sure the path is correct
+import { Controls } from '../Controls';
 
 export class GameScene extends Phaser.Scene {
   
+  private messageQueue: { message: string; sender: string }[] = [];
+  private isDisplayingMessage: boolean = false;
+
   private activeRoom!: number;
   
   private changingScene: boolean = false;
@@ -61,11 +64,12 @@ export class GameScene extends Phaser.Scene {
 
   preload(): void {} // this method isn't needed since the loading scene handles it
 
+  
   create(): void {
     let graphics = this.add.graphics();
     this.controls = new Controls(this);
     FadeUtils.fadeIn(this, 2000, (callback) => {
-        console.log("CEO Scene activated")
+        console.log("GameScene activated")
     });
 
     this.ceo_room = this.add.image(0, 0, CST.IMAGE.CEO_ROOM).setOrigin(0).setDepth(0);
@@ -137,7 +141,7 @@ export class GameScene extends Phaser.Scene {
 
       ceoChat.forEach((message, index) => {
         console.log(`Message ${index + 1}:`, message.text);
-        this.messageBox.addMessage(message.text, "CEO");
+        this.messageBox.addMessage(message.text, message.speaker);
         // Display the text in the game (example coordinates; adjust as needed)
         //this.add.text(100, 100 + index * 20, message.text, { font: '16px Arial', fill: '#ffffff' });
     });

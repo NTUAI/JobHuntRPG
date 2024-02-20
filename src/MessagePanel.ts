@@ -1,9 +1,13 @@
 import Phaser from "phaser";
 
+//let linkText = this.add.text(100, 100, 'Click Here', { fill: '#0000FF' });
+//this.makeInteractive(linkText, 'https://erecruit.fareastone.com.tw/zh_TW/web/guest/-2');
+
 // three colours for different types of messages
 // FETNET: #E72410
 // Player: #FFFFFF (the two colours of FETNET are white and red)
 // System: #964B00
+// URL: #0000EE
 
 
 export class MessagePanel {
@@ -76,6 +80,10 @@ export class MessagePanel {
         else if(sender == "系統") {
             colour = "#5C4033";
         }
+        else if(sender == "URL") {
+            console.log("Yoyoyo");
+            colour = "#0000EE";
+        }
         else {
             console.log("Invalid sender");
         }
@@ -86,11 +94,28 @@ export class MessagePanel {
         const newY = this.y + 20 + (this.messages.length * 22); // Assuming a fixed line height for simplicity
         let newMessage = this.scene.add.text(this.x + 10, newY, this.truncateString(message), { fontSize: '14px', color: colour });
 
+        if(sender == "URL") {
+            newMessage.setInteractive( {useHandCursor: true});
+            newMessage.on('pointerdown', () => window.open("https://erecruit.fareastone.com.tw/zh_TW/web/guest/-2", '_blank'));
+        }
+
         this.messages.push(newMessage);
 
         // Update positions of all messages to accommodate the new message
-        this.updateMessagesPosition();
     }
+
+    private makeTextClickable(textObject: Phaser.GameObjects.Text, url: string): void {
+        // Set the text to be interactive
+        textObject.setInteractive({ useHandCursor: true });
+    
+        // Optional: Change text style on hover
+        textObject.on('pointerover', () => textObject.setStyle({ fill: '#FF0000'}));
+        textObject.on('pointerout', () => textObject.setStyle({ fill: '#E72410'}));
+    
+        // Open URL on click
+        textObject.on('pointerdown', () => window.open(url, '_blank'));
+    }
+    
 
     // Method to update the position of all messages to keep them within the panel
     private updateMessagesPosition() {

@@ -74,7 +74,7 @@ export class MessagePanel {
         if(sender == "玩家") {
             colour = "#FFFFFF"; // player
         }
-        else if(sender == "CEO" || sender == "人資" || sender == "工程師" || sender == "行銷") {
+        else if(sender == "CEO" || sender == "人資" || sender == "資訊" || sender == "行銷") {
             colour = "#E72410"; // CEO
         }
         else if(sender == "系統") {

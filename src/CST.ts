@@ -5,6 +5,12 @@ export const CST = {
         OPTIONS: "OPTIONS",
         GAME: "GAME",
     },
+    LEVEL: {
+        HR: 0,
+        INFORMATION: 1,
+        MARKETING: 2,
+        CEO: 3
+    },
     IMAGE: {
         /*BUTTON: {
         },*/

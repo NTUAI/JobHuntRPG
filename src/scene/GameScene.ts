@@ -6,7 +6,7 @@ import { MessagePanel } from '../MessagePanel';
 import { Controls } from '../Controls';
 
 export class GameScene extends Phaser.Scene {
-  
+
   private activeMessage!: number;
 
   private messageQueue: { message: string; sender: string }[] = [];
@@ -60,7 +60,7 @@ export class GameScene extends Phaser.Scene {
 
   constructor() {
     super({ key: CST.SCENE.GAME });
-    this.activeRoom = 0;
+    this.activeRoom = CST.LEVEL.HR;
     this.xp = 0;
     this.level = 1;
     this.activeMessage = 0;
@@ -129,50 +129,76 @@ export class GameScene extends Phaser.Scene {
     this.xpText = this.add.text(610, 515, "XP: " + this.xp + " ｜ " + "Level: " + this.level, { fontSize: '18px', color: '#FFFFFF' });
     this.compass = this.add.image(55, 550, CST.IMAGE.COMPASS).setDepth(0).setScale(0.2);
 
+
+    /*console.log("testing ... ");
+
+    if (!("Notification" in window)) {
+      alert("This browser does not support system notifications");
+    } else {
+      Notification.requestPermission().then((permission: NotificationPermission) => {
+          if (permission === "granted") {
+            this.showNotification();
+          }
+        });
+      }*/
     this.chatSystem();
+  }
+
+  showNotification(): void {
+    //alert("Testingidasodifnwoqiejafoi sjefio ");
+    const notificationOptions: NotificationOptions = {
+      body: "Here is the notification body",
+      icon: "/assets/images/ATCC_Logo.png"
+    };
+    
+    const notification: Notification = new Notification("Notification Title", notificationOptions);
+  
+    notification.onclick = () => {
+      window.open("https://example.com");
+    };
   }
 
   chatSystem() {
     this.messageBox.addMessage("麻煩按 ↵Enter", "系統");
 
-     // CEO chat
-     let ceoData = this.cache.json.get(CST.CHAT.CEO);
-     const ceoChat = ceoData.CEOChat;
+    // CEO chat
+    let ceoData = this.cache.json.get(CST.CHAT.CEO);
+    const ceoChat = ceoData.CEOChat;
 
-     // HR chat
-     let hrData = this.cache.json.get(CST.CHAT.HR);
-     const hrChat = hrData.HRChat;
+    // HR chat
+    let hrData = this.cache.json.get(CST.CHAT.HR);
+    const hrChat = hrData.HRChat;
 
-     // Marketing chat
-     let marketingData = this.cache.json.get(CST.CHAT.MARKETING);
-     const marketingChat = marketingData.MarketingChat;
+    // Engineering chat
+    let engineeringData = this.cache.json.get(CST.CHAT.ENGINEERING);
+    const engineeringChat = engineeringData.EngineeringChat;
 
-     // Engineering chat
-     let engineeringData = this.cache.json.get(CST.CHAT.ENGINEERING);
-     const engineeringChat = engineeringData.EngineeringChat;
+    // Marketing chat
+    let marketingData = this.cache.json.get(CST.CHAT.MARKETING);
+    const marketingChat = marketingData.MarketingChat;
  
-     /*ceoChat.forEach((message, index) => {
-       console.log(`Message ${index + 1}:`, message.text);
-       this.messageBox.addMessage(message.text, message.speaker);
-     });*/
+    /*ceoChat.forEach((message, index) => {
+      console.log(`Message ${index + 1}:`, message.text);
+      this.messageBox.addMessage(message.text, message.speaker);
+    });*/
  
      this.input.keyboard.on('keydown-ENTER', () => {
-      if((this.activeRoom == 0 && this.activeMessage < ceoChat.length) 
-      || (this.activeRoom == 1 && this.activeMessage < hrChat.length)
-      || (this.activeRoom == 2 && this.activeMessage < marketingChat.length)
-      || (this.activeRoom == 3 && this.activeMessage < engineeringChat.length)) {
+      if((this.activeRoom == CST.LEVEL.CEO && this.activeMessage < ceoChat.length) 
+      || (this.activeRoom == CST.LEVEL.HR && this.activeMessage < hrChat.length)
+      || (this.activeRoom == CST.LEVEL.INFORMATION && this.activeMessage < engineeringChat.length)
+      || (this.activeRoom == CST.LEVEL.MARKETING && this.activeMessage < marketingChat.length)) {
         switch(this.activeRoom) {
-          case 0: // CEO
+          case CST.LEVEL.CEO: // CEO
             this.messageBox.addMessage(ceoChat[this.activeMessage].text, ceoChat[this.activeMessage].speaker);
             break;
-          case 1: // HR
+          case CST.LEVEL.HR: // HR
             this.messageBox.addMessage(hrChat[this.activeMessage].text, hrChat[this.activeMessage].speaker);
             break;
-          case 2: // Marketing
-            this.messageBox.addMessage(marketingChat[this.activeMessage].text, marketingChat[this.activeMessage].speaker);
-            break;
-          case 3: // Engineering
+          case CST.LEVEL.INFORMATION: // Engineering
             this.messageBox.addMessage(engineeringChat[this.activeMessage].text, engineeringChat[this.activeMessage].speaker);
+            break;
+          case CST.LEVEL.MARKETING: // Marketing
+            this.messageBox.addMessage(marketingChat[this.activeMessage].text, marketingChat[this.activeMessage].speaker);
             break;
           default:
             console.log("Something has gone wrong with the activeRoom number...");
@@ -201,7 +227,7 @@ export class GameScene extends Phaser.Scene {
     this.activeRoom = newRoom;
     this.activeMessage = 0;
     switch(this.activeRoom) {
-      case 0: // CEO
+      case CST.LEVEL.CEO: // CEO
         this.messageBox.addMessage("你現在在CEO房間", "系統");
         this.ceo_room.setVisible(true);
         this.hr_room.setVisible(false);
@@ -220,7 +246,7 @@ export class GameScene extends Phaser.Scene {
 
         break;
       
-      case 1: // HR
+      case CST.LEVEL.HR: // HR
         this.messageBox.addMessage("你現在在人資房間", "系統");
         this.ceo_room.setVisible(false);
         this.hr_room.setVisible(true);
@@ -239,7 +265,26 @@ export class GameScene extends Phaser.Scene {
 
         break;
 
-      case 2: // marketing
+      case CST.LEVEL.INFORMATION: // engineer
+        this.messageBox.addMessage("你現在在資訊房間", "系統");
+        this.ceo_room.setVisible(false);
+        this.hr_room.setVisible(false);
+        this.engineer_room.setVisible(true);
+        this.marketing_room.setVisible(false);
+    
+        this.ceo_sprite.setVisible(false);
+        this.hr_sprite.setVisible(false);
+        this.engineer_sprite.setVisible(true);
+        this.marketing_sprite.setVisible(false);
+
+        this.ceo_shadow.setVisible(false);
+        this.hr_shadow.setVisible(false);
+        this.marketing_shadow.setVisible(false);
+        this.engineer_shadow.setVisible(true);
+
+        break;
+
+      case CST.LEVEL.MARKETING: // marketing
         this.messageBox.addMessage("你現在在行銷房間", "系統");
         this.ceo_room.setVisible(false);
         this.hr_room.setVisible(false);
@@ -255,25 +300,6 @@ export class GameScene extends Phaser.Scene {
         this.hr_shadow.setVisible(false);
         this.marketing_shadow.setVisible(true);
         this.engineer_shadow.setVisible(false);
-
-        break;
-
-      case 3: // engineer
-        this.messageBox.addMessage("你現在在工程師房間", "系統");
-        this.ceo_room.setVisible(false);
-        this.hr_room.setVisible(false);
-        this.engineer_room.setVisible(true);
-        this.marketing_room.setVisible(false);
-    
-        this.ceo_sprite.setVisible(false);
-        this.hr_sprite.setVisible(false);
-        this.engineer_sprite.setVisible(true);
-        this.marketing_sprite.setVisible(false);
-
-        this.ceo_shadow.setVisible(false);
-        this.hr_shadow.setVisible(false);
-        this.marketing_shadow.setVisible(false);
-        this.engineer_shadow.setVisible(true);
 
         break;
     }
@@ -292,7 +318,6 @@ export class GameScene extends Phaser.Scene {
   }*/
 
   update() {
-
     this.handleKeyboard()
     //this.updateSpeechBubblePosition();
 

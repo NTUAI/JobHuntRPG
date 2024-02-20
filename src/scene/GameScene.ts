@@ -9,6 +9,16 @@ export class GameScene extends Phaser.Scene {
 
   private activeMessage!: number;
 
+  private name!: string; // 3
+  private age!: string; // 5
+  private school!: string; // 8
+  private major!: string; // 9
+  private grade!: string; // 10
+  private skills!: string; // 12
+  private goals!: string; // 14
+  private contents!: string; // 16
+  private motivation!: string; //18
+
   private messageQueue: { message: string; sender: string }[] = [];
   private isDisplayingMessage: boolean = false;
 
@@ -129,7 +139,6 @@ export class GameScene extends Phaser.Scene {
     this.xpText = this.add.text(610, 515, "XP: " + this.xp + " ｜ " + "Level: " + this.level, { fontSize: '18px', color: '#FFFFFF' });
     this.compass = this.add.image(55, 550, CST.IMAGE.COMPASS).setDepth(0).setScale(0.2);
 
-
     /*console.log("testing ... ");
 
     if (!("Notification" in window)) {
@@ -192,6 +201,37 @@ export class GameScene extends Phaser.Scene {
             this.messageBox.addMessage(ceoChat[this.activeMessage].text, ceoChat[this.activeMessage].speaker);
             break;
           case CST.LEVEL.HR: // HR
+            switch(this.activeMessage) {
+              case 3: // name
+                this.name = prompt("所以，首先，請問冒險者你的大名？")+"";
+                break;
+              case 5: // age
+                this.age = prompt("我的年齡是...")+"";
+                break;
+              case 7: // school
+                this.school = prompt("我的學校是...")+"";
+                break;
+              case 8: // major
+                this.major = prompt("我的科系是...")+"";
+                break;
+              case 9: // year
+                this.grade = prompt("我的年級是...")+"";
+                alert("人資：啊，所以你叫" + this.name + "\n然後你現在是" + this.age + "歲的" + this.school + " " + this.major + " " + this.grade + "年級。\n謝謝您提供的資訊！");
+                break;
+              case 11: // professional skills
+                this.skills = prompt("（選擇題，選擇專業技能：行銷與客戶關係管理、(1)人力資源、(2)財務、(3)專案管理、(4)資訊工程（包括前端開發、後端開發、網通技術)、(5)業務、(6)其他營運）")+"";
+                break;
+              case 13: // professional goals
+                this.goals = prompt("（玩家選擇職業目標）：(1) 開創新的項目團隊、(2) 成為專業領域的專家、(3) 在舊有領導職位一路高升")+"";
+                break;
+              case 15: // job description
+                this.contents = prompt("以下職場工作內容你最在意哪三個呢？ (輸入兩個代碼: 如【1、2、4】\n(1) 錢和福利、(2) 升遷管道、(3) 工作上的挑戰與成長、(4) work - life balance、(5) 培訓與教育訓練、(6) 公司氛圍與文化")+"";
+                break;
+              case 17: // application motivation
+                this.motivation = prompt("根據你的認知你是以下哪兩個原因想加入遠傳呢？ (輸入兩個代碼: 如【1、2】)\n(1) 敏捷辦公室很漂亮、(2) 很多好福利、(3) 工作上的挑戰與創新鼓勵、(4) 可以遠距上班、(5) 培訓與教育訓練多、(6) 公司氛圍與文化感覺不錯、(7)注重 ESG、(8)其他")+"";
+                break;
+            }
+
             this.messageBox.addMessage(hrChat[this.activeMessage].text, hrChat[this.activeMessage].speaker);
             break;
           case CST.LEVEL.INFORMATION: // Engineering
@@ -203,10 +243,17 @@ export class GameScene extends Phaser.Scene {
           default:
             console.log("Something has gone wrong with the activeRoom number...");
         }
-        this.activeMessage++; // Move to the next message
+        this.activeMessage++; // move to the next message
         this.leveling();
       }
+
+      if(this.activeRoom == CST.LEVEL.HR && this.activeMessage == hrChat.length) {
+        alert("人資：以下為你的個人帳號資訊\n\n名字: " + this.name + "\n年齡: " + this.age + "\n學校: " + this.school + "科系: " + this.major + "\n專業技能: " + this.skills +"\n\ 職業目標: " + this.goals + "\n工作內容: " + this.contents + "\n申請動機: " + this.motivation);
+        this.activeMessage++;
+      }
+
      });
+
   }
 
   leveling() {

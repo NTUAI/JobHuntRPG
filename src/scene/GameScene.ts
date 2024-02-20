@@ -230,6 +230,9 @@ export class GameScene extends Phaser.Scene {
               case 17: // application motivation
                 this.motivation = prompt("根據你的認知你是以下哪兩個原因想加入遠傳呢？ (輸入兩個代碼: 如【1、2】)\n(1) 敏捷辦公室很漂亮、(2) 很多好福利、(3) 工作上的挑戰與創新鼓勵、(4) 可以遠距上班、(5) 培訓與教育訓練多、(6) 公司氛圍與文化感覺不錯、(7)注重 ESG、(8)其他")+"";
                 break;
+              default:
+                alert(hrChat[this.activeMessage].speaker + ": " + hrChat[this.activeMessage].text);
+                break;
             }
 
             this.messageBox.addMessage(hrChat[this.activeMessage].text, hrChat[this.activeMessage].speaker);

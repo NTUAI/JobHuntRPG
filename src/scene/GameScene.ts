@@ -198,9 +198,11 @@ export class GameScene extends Phaser.Scene {
       || (this.activeRoom == CST.LEVEL.MARKETING && this.activeMessage < marketingChat.length)) {
         switch(this.activeRoom) {
           case CST.LEVEL.CEO: // CEO
+            alert(ceoChat[this.activeMessage].speaker + ": " + ceoChat[this.activeMessage].text);
             this.messageBox.addMessage(ceoChat[this.activeMessage].text, ceoChat[this.activeMessage].speaker);
             break;
           case CST.LEVEL.HR: // HR
+            this.messageBox.addMessage(hrChat[this.activeMessage].text, hrChat[this.activeMessage].speaker);
             switch(this.activeMessage) {
               case 3: // name
                 this.name = prompt("所以，首先，請問冒險者你的大名？")+"";
@@ -234,13 +236,13 @@ export class GameScene extends Phaser.Scene {
                 alert(hrChat[this.activeMessage].speaker + ": " + hrChat[this.activeMessage].text);
                 break;
             }
-
-            this.messageBox.addMessage(hrChat[this.activeMessage].text, hrChat[this.activeMessage].speaker);
             break;
           case CST.LEVEL.INFORMATION: // Engineering
+            alert(engineeringChat[this.activeMessage].speaker + ": " + engineeringChat[this.activeMessage].text);
             this.messageBox.addMessage(engineeringChat[this.activeMessage].text, engineeringChat[this.activeMessage].speaker);
             break;
           case CST.LEVEL.MARKETING: // Marketing
+            alert(marketingChat[this.activeMessage].speaker + ": " + marketingChat[this.activeMessage].text);
             this.messageBox.addMessage(marketingChat[this.activeMessage].text, marketingChat[this.activeMessage].speaker);
             break;
           default:

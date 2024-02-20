@@ -53,7 +53,7 @@ export class MessagePanel {
     }
 */
 
-    truncateString(str: string, maxLength: number = 12): string {
+    truncateString(str: string, maxLength: number = 11): string {
     if (str.length > maxLength) {
       return str.substring(0, maxLength) + '...';
     }
@@ -68,7 +68,7 @@ export class MessagePanel {
             removedMessage?.destroy(); // Remove the oldest message from the display
         }
 
-        message = sender + "：" + message;
+        let updated_message = sender + "：" + message;
 
         let colour = "#000000"; // default of black
         if(sender == "玩家") {
@@ -92,28 +92,16 @@ export class MessagePanel {
         // Calculate the Y position of the new message
         // This places the new message at the bottom of the list
         const newY = this.y + 20 + (this.messages.length * 22); // Assuming a fixed line height for simplicity
-        let newMessage = this.scene.add.text(this.x + 10, newY, this.truncateString(message), { fontSize: '14px', color: colour });
+        let newMessage = this.scene.add.text(this.x + 10, newY, this.truncateString(updated_message), { fontSize: '14px', color: colour });
 
         if(sender == "URL") {
+            console.log("message for URL: " + message);
             newMessage.setInteractive( {useHandCursor: true});
-            newMessage.on('pointerdown', () => window.open("https://erecruit.fareastone.com.tw/zh_TW/web/guest/-2", '_blank'));
+            newMessage.on('pointerdown', () => window.open(message, '_blank'));
         }
 
         this.messages.push(newMessage);
-
-        // Update positions of all messages to accommodate the new message
-    }
-
-    private makeTextClickable(textObject: Phaser.GameObjects.Text, url: string): void {
-        // Set the text to be interactive
-        textObject.setInteractive({ useHandCursor: true });
-    
-        // Optional: Change text style on hover
-        textObject.on('pointerover', () => textObject.setStyle({ fill: '#FF0000'}));
-        textObject.on('pointerout', () => textObject.setStyle({ fill: '#E72410'}));
-    
-        // Open URL on click
-        textObject.on('pointerdown', () => window.open(url, '_blank'));
+        this.updateMessagesPosition();
     }
     
 

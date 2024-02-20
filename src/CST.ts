@@ -50,8 +50,8 @@ export const CST = {
     },
     CHAT: {
         CEO: "ceo.json",
-        MARKETING: "marketing.json",
         HR: "hr.json",
+        MARKETING: "marketing.json",
         ENGINEERING: "engineering.json"
     }
 }

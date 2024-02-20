@@ -7,6 +7,8 @@ import { Controls } from '../Controls';
 
 export class GameScene extends Phaser.Scene {
   
+  private activeMessage!: number;
+
   private messageQueue: { message: string; sender: string }[] = [];
   private isDisplayingMessage: boolean = false;
 
@@ -46,6 +48,7 @@ export class GameScene extends Phaser.Scene {
   private xp!: number;
   private xpBar!: Phaser.GameObjects.Image;
   private level!: number;
+  private xpText!: Phaser.GameObjects.Text;
 
   private player_shadow!: Phaser.GameObjects.Graphics;
   private ceo_shadow!: Phaser.GameObjects.Graphics;
@@ -60,6 +63,7 @@ export class GameScene extends Phaser.Scene {
     this.activeRoom = 0;
     this.xp = 0;
     this.level = 1;
+    this.activeMessage = 0;
   }
 
   preload(): void {} // this method isn't needed since the loading scene handles it
@@ -98,8 +102,8 @@ export class GameScene extends Phaser.Scene {
     // character (temp, need to preload images once character sprite sheet is ready)
 
     // scene boundaries
-    //this.physics.world.setBounds(100, 100, 500, 500);
-    //this.player_sprite.setCollideWorldBounds(true);
+    this.physics.world.setBounds(70, 0, 500, 600);
+    this.player_sprite.setCollideWorldBounds(true);
     
     // ship sound effects
     this.ship = this.sound.add(CST.AUDIO.GAME_AUDIO, { loop: true });
@@ -115,55 +119,87 @@ export class GameScene extends Phaser.Scene {
     //this.add.graphics().lineStyle(5, 0x5C4033, 1).strokeRect(600, 548, 198, 48);
     this.add.graphics({ lineStyle: { width: 5, color: 0x5C4033 } }).lineBetween(600, 510, 800, 510).setDepth(100);
 
-    //keyboard
-    this.cursors = this.input.keyboard.createCursorKeys();
-    this.input.keyboard.addKeys({
-        up:Phaser.Input.Keyboard.KeyCodes.W,
-        down:Phaser.Input.Keyboard.KeyCodes.S,
-        left:Phaser.Input.Keyboard.KeyCodes.A,
-        right:Phaser.Input.Keyboard.KeyCodes.D});
+    
+    graphics.fillStyle(0x000000, 1); // The '1' is the alpha for full opacity
+    //graphics.fillRect(0, 512, 512, 100); // Fill a rectangle from (0, 512) to (512, 612)
+    this.messageBox = new MessagePanel(this);
+    this.setRoom(this.activeRoom);
 
+    this.xpBar = this.add.image(605, 535, CST.IMAGE.XP).setOrigin(0).setDepth(0).setScale(0.23);
+    this.xpText = this.add.text(610, 515, "XP: " + this.xp + " ｜ " + "Level: " + this.level, { fontSize: '18px', color: '#FFFFFF' });
+    this.compass = this.add.image(55, 550, CST.IMAGE.COMPASS).setDepth(0).setScale(0.2);
 
-      graphics.fillStyle(0x000000, 1); // The '1' is the alpha for full opacity
-      //graphics.fillRect(0, 512, 512, 100); // Fill a rectangle from (0, 512) to (512, 612)
-      this.messageBox = new MessagePanel(this);
-      this.setRoom(this.activeRoom);
+    this.chatSystem();
+  }
 
-      this.xpBar = this.add.image(605, 535, CST.IMAGE.XP).setOrigin(0).setDepth(0).setScale(0.23);
-      this.add.text(610, 515, "XP: " + this.xp + " ｜ " + "Level: " + this.level, { fontSize: '18px', color: '#FFFFFF' });
-      // this.add.text(610, 520, "Level: " + this.level), { fontSize: '20px', color: '#FFFFFF' };
-      this.compass = this.add.image(55, 550, CST.IMAGE.COMPASS).setDepth(0).setScale(0.2);
+  chatSystem() {
+    this.messageBox.addMessage("麻煩按 ↵Enter", "系統");
 
+     // CEO chat
+     let ceoData = this.cache.json.get(CST.CHAT.CEO);
+     const ceoChat = ceoData.CEOChat;
 
+     // HR chat
+     let hrData = this.cache.json.get(CST.CHAT.HR);
+     const hrChat = hrData.HRChat;
 
-      let chatData = this.cache.json.get(CST.CHAT.CEO);
-      const ceoChat = chatData.CEOChat;
+     // Marketing chat
+     let marketingData = this.cache.json.get(CST.CHAT.MARKETING);
+     const marketingChat = marketingData.MarketingChat;
 
-      ceoChat.forEach((message, index) => {
-        console.log(`Message ${index + 1}:`, message.text);
-        this.messageBox.addMessage(message.text, message.speaker);
-        // Display the text in the game (example coordinates; adjust as needed)
-        //this.add.text(100, 100 + index * 20, message.text, { font: '16px Arial', fill: '#ffffff' });
-    });
+     // Engineering chat
+     let engineeringData = this.cache.json.get(CST.CHAT.ENGINEERING);
+     const engineeringChat = engineeringData.EngineeringChat;
+ 
+     /*ceoChat.forEach((message, index) => {
+       console.log(`Message ${index + 1}:`, message.text);
+       this.messageBox.addMessage(message.text, message.speaker);
+     });*/
+ 
+     this.input.keyboard.on('keydown-ENTER', () => {
+      if((this.activeRoom == 0 && this.activeMessage < ceoChat.length) 
+      || (this.activeRoom == 1 && this.activeMessage < hrChat.length)
+      || (this.activeRoom == 2 && this.activeMessage < marketingChat.length)
+      || (this.activeRoom == 3 && this.activeMessage < engineeringChat.length)) {
+        switch(this.activeRoom) {
+          case 0: // CEO
+            this.messageBox.addMessage(ceoChat[this.activeMessage].text, ceoChat[this.activeMessage].speaker);
+            break;
+          case 1: // HR
+            this.messageBox.addMessage(hrChat[this.activeMessage].text, hrChat[this.activeMessage].speaker);
+            break;
+          case 2: // Marketing
+            this.messageBox.addMessage(marketingChat[this.activeMessage].text, marketingChat[this.activeMessage].speaker);
+            break;
+          case 3: // Engineering
+            this.messageBox.addMessage(engineeringChat[this.activeMessage].text, engineeringChat[this.activeMessage].speaker);
+            break;
+          default:
+            console.log("Something has gone wrong with the activeRoom number...");
+        }
+        this.activeMessage++; // Move to the next message
+        this.leveling();
+      }
+     });
+  }
 
-      // Example: Display the first message
-      //let firstMessage = chatData[0].text;
-      //console.log(firstMessage);
-      
-      //this.messageBox.addMessage(firstMessage.text, "CEO");
-      //this.add.text(100, 100, firstMessage.text, { font: '16px Arial', fill: '#ffffff' });
-  
-      // If the message has a URL, make it clickable
-      /*if (firstMessage.url) {
-          this.add.text(100, 120, 'Click here for more info', { font: '16px Arial', fill: '#00ff00' })
-              .setInteractive()
-              .on('pointerdown', () => window.open(firstMessage.url, '_blank'));
-      }*/
-
+  leveling() {
+    this.xp++;
+    if((this.xp > 5 && this.level == 1)
+    || (this.xp > 8 && this.level == 2)
+    || (this.xp > 12 && this.level == 3)
+    || (this.xp > 17 && this.level == 4)
+    || (this.xp > 23 && this.level == 5)
+    || this.xp > 31 && this.level == 6) {
+      this.level++;
+      this.xp = 0;
     }
+    this.xpText.setText("XP：" + this.xp + " ｜ " + "Level：" + this.level);
+  }
 
   setRoom(newRoom: number): void {
     this.activeRoom = newRoom;
+    this.activeMessage = 0;
     switch(this.activeRoom) {
       case 0: // CEO
         this.messageBox.addMessage("你現在在CEO房間", "系統");
@@ -282,25 +318,25 @@ export class GameScene extends Phaser.Scene {
     // input 1
     if(this.controls.justDown('one')) {
       console.log("one pressed");
-      this.messageBox.addMessage("你選了 1", "玩家");
+      this.messageBox.addMessage("你選了 1", "系統");
     }
 
     // input 2
     if(this.controls.justDown('two')) {
       console.log("two pressed");
-      this.messageBox.addMessage("你選了 2", "玩家");
+      this.messageBox.addMessage("你選了 2", "系統");
     }
 
     // input 3
     if(this.controls.justDown('three')) {
       console.log("three pressed");
-      this.messageBox.addMessage("你選了 3", "玩家");
+      this.messageBox.addMessage("你選了 3", "系統");
     }
 
     //input 4
     if(this.controls.justDown('four')) {
       console.log("four pressed");
-      this.messageBox.addMessage("你選了 4", "玩家");
+      this.messageBox.addMessage("你選了 4", "系統");
     }
 
     // run

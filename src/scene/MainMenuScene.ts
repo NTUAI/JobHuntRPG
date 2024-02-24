@@ -1,6 +1,7 @@
 import { CST } from "../CST";
 import { FadeUtils } from "../FadeUtils";
 export class MainMenuScene extends Phaser.Scene {
+
     constructor() {
         super({
             key: CST.SCENE.MENU
@@ -9,7 +10,7 @@ export class MainMenuScene extends Phaser.Scene {
 
     init() {}
 
-    toCEO(): void {
+    toHR(): void {
         let a = this.sound.add(CST.AUDIO.TITLE_START, {volume: 1});
         this.sound.stopAll();
         a.play();
@@ -106,6 +107,34 @@ export class MainMenuScene extends Phaser.Scene {
                 pointerdown - just click
         */
 
+        let Mute_Button = this.add.image(570, 30, CST.IMAGE.MUTE).setDepth(1).setScale(0.16);
+        let Unmute_Button = this.add.image(570, 30, CST.IMAGE.UNMUTE).setDepth(1).setScale(0.16);
+        Unmute_Button.setVisible(false);
+
+
+        let isMuted = false;
+        // mute button
+        Mute_Button.setInteractive();
+        Unmute_Button.setInteractive();
+        
+        Mute_Button.on('pointerup', () => {
+            toggleMute();
+        });
+        
+        // Event listener for the Unmute button
+        Unmute_Button.on('pointerup', () => {
+            toggleMute();
+        });
+
+        const toggleMute = () => {
+            isMuted = !isMuted; // Toggle the mute state
+            this.sound.mute = isMuted; // Apply the mute state to the game's sound manager
+            this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
+        
+            // Update button visibility based on the new mute state
+            Mute_Button.setVisible(!isMuted);
+            Unmute_Button.setVisible(isMuted);
+        };
 
         // play button
         playButton.setInteractive();
@@ -128,7 +157,7 @@ export class MainMenuScene extends Phaser.Scene {
             optionsButton.setVisible(false);
             quitButton.setVisible(false);
             hoverImg.setVisible(false);
-            this.toCEO();
+            this.toHR();
         });
 
         this.add.graphics().fillStyle(0x000000, 0.2).fillCircle(80, 87, 83);

@@ -14,6 +14,8 @@ export const CST = {
     IMAGE: {
         /*BUTTON: {
         },*/
+        MUTE: "mute.png",
+        UNMUTE: "unmute.png",
         LOADING: "loading.png",
         TITLE: "mainmenu.png",
         PLAY: "play_button.png",

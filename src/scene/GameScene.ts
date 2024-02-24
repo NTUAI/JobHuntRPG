@@ -7,7 +7,12 @@ import { Controls } from '../Controls';
 
 export class GameScene extends Phaser.Scene {
 
+  private enterEvent!: Phaser.Time.TimerEvent;
+  private goDown!: Phaser.Time.TimerEvent;
+
   private activeMessage!: number;
+
+  private enterFlag!: boolean;
 
   private name!: string; // 3
   private age!: string; // 5
@@ -74,6 +79,7 @@ export class GameScene extends Phaser.Scene {
     this.xp = 0;
     this.level = 1;
     this.activeMessage = 0;
+    this.enterFlag = true;
   }
 
   preload(): void {} // this method isn't needed since the loading scene handles it
@@ -150,7 +156,17 @@ export class GameScene extends Phaser.Scene {
           }
         });
       }*/
+      this.enterEvent = this.time.addEvent({
+        delay: 2000, // Delay in milliseconds (3000ms = 3 seconds)
+        callback: () => {
+          // Call your specific function here
+          this.messageBox.addMessage("按 ↵Enter", "系統");
+      },
+        callbackScope: this, // The scope in which to call the function
+        loop: true // Set to true to call the function repeatedly
+    });
     this.chatSystem();
+
   }
 
   showNotification(): void {
@@ -168,6 +184,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   chatSystem() {
+
     this.messageBox.addMessage("麻煩按 ↵Enter", "系統");
 
     // CEO chat
@@ -192,6 +209,8 @@ export class GameScene extends Phaser.Scene {
     });*/
  
      this.input.keyboard.on('keydown-ENTER', () => {
+      this.enterEvent.remove();
+      this.enterFlag = false;
       if((this.activeRoom == CST.LEVEL.CEO && this.activeMessage < ceoChat.length) 
       || (this.activeRoom == CST.LEVEL.HR && this.activeMessage < hrChat.length)
       || (this.activeRoom == CST.LEVEL.INFORMATION && this.activeMessage < engineeringChat.length)

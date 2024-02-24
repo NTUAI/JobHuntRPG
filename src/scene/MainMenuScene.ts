@@ -107,8 +107,8 @@ export class MainMenuScene extends Phaser.Scene {
                 pointerdown - just click
         */
 
-        let Mute_Button = this.add.image(570, 30, CST.IMAGE.MUTE).setDepth(1).setScale(0.16);
-        let Unmute_Button = this.add.image(570, 30, CST.IMAGE.UNMUTE).setDepth(1).setScale(0.16);
+        let Mute_Button = this.add.image(770, 570, CST.IMAGE.MUTE).setDepth(1).setScale(0.16);
+        let Unmute_Button = this.add.image(770, 570, CST.IMAGE.UNMUTE).setDepth(1).setScale(0.16);
         Unmute_Button.setVisible(false);
 
 
@@ -127,11 +127,10 @@ export class MainMenuScene extends Phaser.Scene {
         });
 
         const toggleMute = () => {
-            isMuted = !isMuted; // Toggle the mute state
-            this.sound.mute = isMuted; // Apply the mute state to the game's sound manager
+            isMuted = !isMuted; // toggle mute state
+            this.sound.mute = isMuted; // apply mute state to game's sound manager
             this.sound.add(CST.AUDIO.SELECT, {volume: 1}).play();
         
-            // Update button visibility based on the new mute state
             Mute_Button.setVisible(!isMuted);
             Unmute_Button.setVisible(isMuted);
         };

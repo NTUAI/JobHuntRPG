@@ -10,6 +10,8 @@ export class GameScene extends Phaser.Scene {
   private enterEvent!: Phaser.Time.TimerEvent;
   private goDown!: Phaser.Time.TimerEvent;
 
+  private displayDownArrow!: boolean;
+
   private activeMessage!: number;
 
   private enterFlag!: boolean;
@@ -28,6 +30,9 @@ export class GameScene extends Phaser.Scene {
   private isDisplayingMessage: boolean = false;
 
   private activeRoom!: number;
+  private finished!: boolean;
+
+  private downArrow!: Phaser.GameObjects.Image;
   
   private changingScene: boolean = false;
 
@@ -83,6 +88,7 @@ export class GameScene extends Phaser.Scene {
     this.activeMessage = 0;
     this.enterFlag = true;
     this.spaceFlag = true;
+    this.displayDownArrow = false;
   }
 
   preload(): void {
@@ -149,6 +155,17 @@ export class GameScene extends Phaser.Scene {
     this.xpBar = this.add.image(605, 535, CST.IMAGE.XP).setOrigin(0).setDepth(0).setScale(0.23);
     this.xpText = this.add.text(610, 515, "XP: " + this.xp + " ｜ " + "Level: " + this.level, { fontSize: '18px', color: '#FFFFFF' });
     this.compass = this.add.image(55, 550, CST.IMAGE.COMPASS).setDepth(0).setScale(0.2);
+
+    this.downArrow = this.add.image(300, 500, CST.IMAGE.DOWN_ARROW).setDepth(0).setScale(0.2);
+    this.tweens.add({
+      targets: this.downArrow,
+      alpha: 0,               // Target transparency
+      ease: 'Linear',        // Linear easing for a smooth transition
+      duration: 1000,        // Duration of fade
+      repeat: -1,            // Repeat indefinitely
+      yoyo: true,            // Go back to the original state (visible)
+    });
+    this.downArrow.setVisible(false);
 
     /*console.log("testing ... ");
 
@@ -275,8 +292,11 @@ export class GameScene extends Phaser.Scene {
         this.leveling();
       }
 
+      // go to active room
       if(this.activeRoom == CST.LEVEL.HR && this.activeMessage == hrChat.length) {
         alert("人資：以下為你的個人帳號資訊\n\n名字: " + this.name + "\n年齡: " + this.age + "\n學校: " + this.school + "科系: " + this.major + "\n專業技能: " + this.skills +"\n\ 職業目標: " + this.goals + "\n工作內容: " + this.contents + "\n申請動機: " + this.motivation);
+        console.log("INFORMATION");
+        console.log("人資：以下為你的個人帳號資訊\n\n名字: " + this.name + "\n年齡: " + this.age + "\n學校: " + this.school + "科系: " + this.major + "\n專業技能: " + this.skills +"\n\ 職業目標: " + this.goals + "\n工作內容: " + this.contents + "\n申請動機: " + this.motivation);
         this.activeMessage++;
       }
      });

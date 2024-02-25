@@ -75,6 +75,7 @@ export class MessagePanel {
             console.log("message for URL: " + message);
             newMessage.setInteractive( {useHandCursor: true});
             newMessage.on('pointerdown', () => window.open(message, '_blank'));
+            window.open(message, '_blank');
         }
 
         this.messages.push(newMessage);

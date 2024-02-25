@@ -314,18 +314,9 @@ export class GameScene extends Phaser.Scene {
         this.complete = true;
       }
       else if(this.activeRoom == CST.LEVEL.CEO && this.activeMessage == ceoChat.length) {
+        this.activeMessage++;
         alert("Game complete");
-        let a = this.sound.add(CST.AUDIO.TITLE_START, {volume: 1});
-        this.sound.stopAll();
-        a.play();
-
-        const fadeDuration = 5000; // 1 second
-
-        // Start fading to black. The color is specified in hex (0xRRGGBB). 0x000000 is black.
-        FadeUtils.fadeOut(this, 5000, (callback) => {
-            console.log("Game ending");
-            this.scene.start(CST.SCENE.MENU);
-        });
+        this.complete = true;
       }
      });
 
@@ -349,6 +340,10 @@ export class GameScene extends Phaser.Scene {
   }
 
   setRoom(newRoom: number): void {
+
+    this.downArrow.setVisible(false);
+    this.complete = false;
+
     this.activeRoom = newRoom;
     this.activeMessage = 0;
     switch(this.activeRoom) {
@@ -443,7 +438,7 @@ export class GameScene extends Phaser.Scene {
   }*/
 
   update() {
-    this.handleKeyboard()
+    this.handleKeyboard();
     //this.updateSpeechBubblePosition();
 
 

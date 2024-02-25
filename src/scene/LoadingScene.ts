@@ -78,7 +78,7 @@ export class LoadingScene extends Phaser.Scene {
         */
 
         this.load.on("progress", (percent: number) => {
-            loadingBar.fillRect(0, this.game.renderer.height / 2, this.game.renderer.width * percent, 50);
+            loadingBar.fillRect(0, this.game.renderer.height - 50, this.game.renderer.width * percent, 50);
             console.log(""+ percent);
         })
 

@@ -36,11 +36,13 @@ export class GameScene extends Phaser.Scene {
   private hr_room!: Phaser.GameObjects.Image;
   private engineer_room!: Phaser.GameObjects.Image;
   private marketing_room!: Phaser.GameObjects.Image;
+  private instructions!: Phaser.GameObjects.Image;
   
   // audio
   private music!: Phaser.Sound.BaseSound;
   private ship!: Phaser.Sound.BaseSound;
 
+  private spaceFlag!: boolean;
   // keyboard
   private controls!: Controls;
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys; // move up, left, down, right
@@ -80,9 +82,12 @@ export class GameScene extends Phaser.Scene {
     this.level = 1;
     this.activeMessage = 0;
     this.enterFlag = true;
+    this.spaceFlag = true;
   }
 
-  preload(): void {} // this method isn't needed since the loading scene handles it
+  preload(): void {
+
+  } // this method isn't needed since the loading scene handles it
 
   
   create(): void {
@@ -166,7 +171,6 @@ export class GameScene extends Phaser.Scene {
         loop: true // Set to true to call the function repeatedly
     });
     this.chatSystem();
-
   }
 
   showNotification(): void {
@@ -275,8 +279,10 @@ export class GameScene extends Phaser.Scene {
         alert("人資：以下為你的個人帳號資訊\n\n名字: " + this.name + "\n年齡: " + this.age + "\n學校: " + this.school + "科系: " + this.major + "\n專業技能: " + this.skills +"\n\ 職業目標: " + this.goals + "\n工作內容: " + this.contents + "\n申請動機: " + this.motivation);
         this.activeMessage++;
       }
-
      });
+
+    this.instructions = this.add.image(0, 0, CST.IMAGE.INSTRUCTIONS).setOrigin(0).setDepth(0);
+    this.instructions.setVisible(true);
 
   }
 
@@ -410,6 +416,12 @@ export class GameScene extends Phaser.Scene {
 
   handleKeyboard() {
     let speed = this.controls.isDown('shift') ? 250 : 150;
+
+    // space
+    if(this.controls.justDown('space')) {
+      console.log("space pressed");
+      this.instructions.setVisible(false);
+    }
 
     // input 1
     if(this.controls.justDown('one')) {

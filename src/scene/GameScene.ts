@@ -6,6 +6,7 @@ import { MessagePanel } from '../MessagePanel';
 import { Controls } from '../Controls';
 
 export class GameScene extends Phaser.Scene {
+  private quit!: boolean;
 
   private enterEvent!: Phaser.Time.TimerEvent;
   private goDown!: Phaser.Time.TimerEvent;
@@ -91,6 +92,7 @@ export class GameScene extends Phaser.Scene {
     this.enterFlag = true;
     this.spaceFlag = true;
     this.complete = false;
+    this.quit = false;
 
     this.name = "";
     this.age = "";
@@ -573,8 +575,11 @@ export class GameScene extends Phaser.Scene {
 
     // ESC input
     if(this.controls.isDown('esc')) {
+      if(this.quit == false) {
         this.sound.stopAll();
         this.scene.start(CST.SCENE.MENU);
+        this.quit = true;
+      }
     }
 
     // if the user presses ESC, overlay the menu

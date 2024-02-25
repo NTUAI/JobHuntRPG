@@ -349,6 +349,9 @@ export class GameScene extends Phaser.Scene {
   }
 
   setRoom(newRoom: number): void {
+    if(newRoom >= 1 && newRoom <= 2) {
+      this.downArrow.setVisible(false);
+    }
     this.activeRoom = newRoom;
     this.activeMessage = 0;
     switch(this.activeRoom) {

@@ -91,6 +91,16 @@ export class GameScene extends Phaser.Scene {
     this.enterFlag = true;
     this.spaceFlag = true;
     this.complete = false;
+
+    this.name = "";
+    this.age = "";
+    this.school = "";
+    this.grade = "";
+    this.skills = "";
+    this.major = "";
+    this.goals = "";
+    this.contents = "";
+    this.motivation = "";
   }
 
   preload(): void {
@@ -206,6 +216,16 @@ export class GameScene extends Phaser.Scene {
     };
   }
 
+  ensureInput(a: string) {
+    let userInput;  
+    do {
+      userInput = prompt(a);
+    } while (userInput === null || userInput.trim() === "");
+
+    return userInput;
+  }
+
+
   chatSystem() {
 
     this.messageBox.addMessage("麻煩按 ↵Enter", "系統");
@@ -247,32 +267,32 @@ export class GameScene extends Phaser.Scene {
             this.messageBox.addMessage(hrChat[this.activeMessage].text, hrChat[this.activeMessage].speaker);
             switch(this.activeMessage) {
               case 3: // name
-                this.name = prompt("所以，首先，請問冒險者你的大名？")+"";
+                this.name = this.ensureInput("我的名字是...");
                 break;
               case 5: // age
-                this.age = prompt("我的年齡是...")+"";
+                this.age = this.ensureInput("我的年齡是...");
                 break;
               case 7: // school
-                this.school = prompt("我的學校是...")+"";
+                this.school = this.ensureInput("我的學校是...")+"";
                 break;
               case 8: // major
-                this.major = prompt("我的科系是...")+"";
+                this.major = this.ensureInput("我的科系是...")+"";
                 break;
               case 9: // year
-                this.grade = prompt("我的年級是...")+"";
+                this.grade = this.ensureInput("我的年級是...")+"";
                 alert("人資：啊，所以你叫" + this.name + "\n然後你現在是" + this.age + "歲的" + this.school + " " + this.major + " " + this.grade + "年級。\n謝謝您提供的資訊！");
                 break;
               case 11: // professional skills
-                this.skills = prompt("（選擇題，選擇專業技能：行銷與客戶關係管理、(1)人力資源、(2)財務、(3)專案管理、(4)資訊工程（包括前端開發、後端開發、網通技術)、(5)業務、(6)其他營運）")+"";
+                this.skills = this.ensureInput("（選擇題，選擇專業技能：行銷與客戶關係管理、(1)人力資源、(2)財務、(3)專案管理、(4)資訊工程（包括前端開發、後端開發、網通技術)、(5)業務、(6)其他營運）")+"";
                 break;
               case 13: // professional goals
-                this.goals = prompt("（玩家選擇職業目標）：(1) 開創新的項目團隊、(2) 成為專業領域的專家、(3) 在舊有領導職位一路高升")+"";
+                this.goals = this.ensureInput("（玩家選擇職業目標）：(1) 開創新的項目團隊、(2) 成為專業領域的專家、(3) 在舊有領導職位一路高升")+"";
                 break;
               case 15: // job description
-                this.contents = prompt("以下職場工作內容你最在意哪三個呢？ (輸入兩個代碼: 如【1、2、4】\n(1) 錢和福利、(2) 升遷管道、(3) 工作上的挑戰與成長、(4) work - life balance、(5) 培訓與教育訓練、(6) 公司氛圍與文化")+"";
+                this.contents = this.ensureInput("以下職場工作內容你最在意哪三個呢？ (輸入兩個代碼: 如【1、2、4】\n(1) 錢和福利、(2) 升遷管道、(3) 工作上的挑戰與成長、(4) work - life balance、(5) 培訓與教育訓練、(6) 公司氛圍與文化")+"";
                 break;
               case 17: // application motivation
-                this.motivation = prompt("根據你的認知你是以下哪兩個原因想加入遠傳呢？ (輸入兩個代碼: 如【1、2】)\n(1) 敏捷辦公室很漂亮、(2) 很多好福利、(3) 工作上的挑戰與創新鼓勵、(4) 可以遠距上班、(5) 培訓與教育訓練多、(6) 公司氛圍與文化感覺不錯、(7)注重 ESG、(8)其他")+"";
+                this.motivation = this.ensureInput("根據你的認知你是以下哪兩個原因想加入遠傳呢？ (輸入兩個代碼: 如【1、2】)\n(1) 敏捷辦公室很漂亮、(2) 很多好福利、(3) 工作上的挑戰與創新鼓勵、(4) 可以遠距上班、(5) 培訓與教育訓練多、(6) 公司氛圍與文化感覺不錯、(7)注重 ESG、(8)其他")+"";
                 break;
               default:
                 alert(hrChat[this.activeMessage].speaker + ": " + hrChat[this.activeMessage].text);
@@ -296,9 +316,9 @@ export class GameScene extends Phaser.Scene {
 
       // go to active room
       if(this.activeRoom == CST.LEVEL.HR && this.activeMessage == hrChat.length) {
-        alert("人資：以下為你的個人帳號資訊\n\n名字: " + this.name + "\n年齡: " + this.age + "\n學校: " + this.school + "科系: " + this.major + "\n專業技能: " + this.skills +"\n\ 職業目標: " + this.goals + "\n工作內容: " + this.contents + "\n申請動機: " + this.motivation);
+        alert("人資：以下為你的個人帳號資訊\n\n名字: " + this.name + "\n年齡: " + this.age + "\n學校: " + this.school + "\n科系: " + this.major + "\n專業技能: " + this.skills +"\n\ 職業目標: " + this.goals + "\n工作內容: " + this.contents + "\n申請動機: " + this.motivation);
         console.log("INFORMATION");
-        console.log("人資：以下為你的個人帳號資訊\n\n名字: " + this.name + "\n年齡: " + this.age + "\n學校: " + this.school + "科系: " + this.major + "\n專業技能: " + this.skills +"\n\ 職業目標: " + this.goals + "\n工作內容: " + this.contents + "\n申請動機: " + this.motivation);
+        console.log("人資：以下為你的個人帳號資訊\n\n名字: " + this.name + "\n年齡: " + this.age + "\n學校: " + this.school + "\n科系: " + this.major + "\n專業技能: " + this.skills +"\n\ 職業目標: " + this.goals + "\n工作內容: " + this.contents + "\n申請動機: " + this.motivation);
         this.activeMessage++;
         this.downArrow.setVisible(true);
         this.complete = true;

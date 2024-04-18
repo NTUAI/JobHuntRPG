@@ -1,10 +1,25 @@
-# EosRPG - Eosphorus Pirate Game
+# Job Hunt RPG - Apply for jobs in an RPG!
+
+## Overview
+- The concept of this project is to allow for job-seeking scallywags to apply for their next job as their own RPG videogame character!
+- Normal job application systems are boring, repetitive, and don't treat you like the character that you are!
+- Apply for jobs in multiple languages!
+- Interactiveness, unlike conventional job application systems!
+- Character customization! (future)
+- Different open worlds for different companies and different job portals! (future)
+
+![](demo.png)
+
+## Tech Stack
+- This project was created with Phaser 3, an HTML5 browser-based game framework. It was built using JavaScript, and requires development in either JavaScript or Typescript.
+- I opt to use TypeScript since it is more powerful and more scalable than JavaScript (and also since more tutorials I watched gave good examples for it),
+- The assets were created purely using prompting with NightCafe.studio and ChatGPT-4 and in combination with editing softwares.
+- The 
 
 An RPG that lets you discover about [Eosphorus](https://eosphor.us), our project submission to Far East Telecom's co-hosted competition with [ATCC 2023](https://atcc.co/21statcc/).
 
-EosRPG is a Phaser 3 TypeScript web app game that is linked directly to our website.
-
-
+> Note: this project is still in Beta version. We are actively seeking supporters and contributors.  
+> If you would like to contribute, please contact my LinkedIn: https://linkedin.com/in/austin-hua
 
 ## Files
 
@@ -30,16 +45,3 @@ EosRPG is a Phaser 3 TypeScript web app game that is linked directly to our webs
 - Add UI class that overlays each scene in game. The UI should include: inventory (bottom), text chat/notification system (bottom left), and character information (top right).
 - Backend needs to be updated from NodeJS to Django.
 - Consider adding resume/CV AI so that the following information can be fetched/determined: basic info (name/education/job/contact info), suitable department.
-
-## Requirements
-
-## Available Commands
-
-| Command | Description |
-|---------|-------------|
-| `yarn install --frozen-lockfile` | Install project dependencies |
-| `yarn start` | Build project and open web server running project |
-| `yarn build` | Builds code bundle for production |
-| `yarn lint` | Uses ESLint to lint code |
-
-## Deployment
